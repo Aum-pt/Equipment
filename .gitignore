@@ -7,6 +7,7 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
@@ -63,6 +64,7 @@ web_modules/
 .rts2_cache_es/
 .rts2_cache_umd/
 
+
 # Optional REPL history
 .node_repl_history
 
@@ -74,10 +76,15 @@ web_modules/
 
 # dotenv environment variable files
 .env
+
 .env.development.local
 .env.test.local
 .env.production.local
 .env.local
+
+.env.*
+!.env.example
+
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -104,6 +111,17 @@ dist
 .temp
 .cache
 
+
+# Sveltekit cache directory
+.svelte-kit/
+
+# vitepress build output
+**/.vitepress/dist
+
+# vitepress cache directory
+**/.vitepress/cache
+
+>>>>>>> 4fa2ad386ae86516888d7561080e3ecf411b3548
 # Docusaurus cache and generated files
 .docusaurus
 
@@ -115,6 +133,9 @@ dist
 
 # DynamoDB Local files
 .dynamodb/
+
+# Firebase cache directory
+.firebase/
 
 # TernJS port file
 .tern-port
@@ -128,3 +149,16 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# yarn v3
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Vite logs files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
