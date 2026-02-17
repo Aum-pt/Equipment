@@ -1,0 +1,113 @@
+.table-section {
+  padding: 30px;
+}
+
+/* ใบยืม */
+.borrow-card {
+  background: rgba(26, 32, 44, 0.9);
+  border-radius: 14px;
+  border: 1px solid #4a5568;
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+
+.borrow-card-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid #4a5568;
+  background: rgba(45, 55, 72, 0.7);
+}
+
+.borrow-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #d69e2e;
+}
+
+.borrow-meta {
+  font-size: 13px;
+  color: #a0aec0;
+  margin-top: 4px;
+}
+
+/* รายการอุปกรณ์ */
+.borrow-items {
+  padding: 20px;
+}
+
+/* การ์ดอุปกรณ์ */
+.return-item-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(45, 55, 72, 0.6);
+  border: 1px solid #4a5568;
+  border-radius: 10px;
+
+  padding: 14px 18px;
+  margin-bottom: 12px;
+}
+
+.return-item-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #edf2f7;
+}
+
+.item-meta {
+  font-size: 12px;
+  color: #a0aec0;
+  margin-top: 3px;
+}
+
+/* ฟอร์ม */
+.return-item-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qty-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  color: #a0aec0;
+}
+
+.qty-group input {
+  width: 70px;
+  padding: 6px 8px;
+  margin-top: 3px;
+
+  background: #1a202c;
+  border: 1px solid #4a5568;
+  border-radius: 6px;
+  color: white;
+  text-align: center;
+}
+
+.qty-group input:focus {
+  outline: none;
+  border-color: #d69e2e;
+}
+
+/* ปุ่ม */
+.return-btn {
+  background: linear-gradient(135deg, #d69e2e, #b7791f);
+  border: none;
+  color: #1a202c;
+
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.return-btn:hover {
+  transform: translateY(-1px);
+}

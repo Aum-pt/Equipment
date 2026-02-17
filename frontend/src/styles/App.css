@@ -1,0 +1,67 @@
+/* พื้นหลังหลัก */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212; /* ดำ */
+  color: #f5f5f5; /* ขาวเทา */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  gap: 20px;
+  background: #111;
+  padding: 12px 20px;
+  align-items: center;
+  position: sticky;     /* ✅ ติดบนจอ */
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #222;
+}
+
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.navbar a:hover {
+  color: #4da6ff;
+}
+
+.logout-btn {
+  margin-left: auto;     /* ดันไปขวาสุด */
+  background: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #d9363e;
+}
+
+
+/* Heading */
+h1 {
+  color: #FFD700; /* เหลือง */
+}
+
+/* ปุ่ม */
+.btn {
+  background-color: #FFD700;
+  color: #121212;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #e6c200;
+}
+
