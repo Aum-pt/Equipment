@@ -121,7 +121,6 @@ dist
 # vitepress cache directory
 **/.vitepress/cache
 
->>>>>>> 4fa2ad386ae86516888d7561080e3ecf411b3548
 # Docusaurus cache and generated files
 .docusaurus
 

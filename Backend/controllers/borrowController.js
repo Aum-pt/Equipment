@@ -5,14 +5,18 @@ const Repair = require('../models/Repair');
 const ActivityLog = require('../models/ActivityLog');
 
 /* ================= BORROW ================= */
-
-exports.borrowEquipment = async (req, res) => {
+exports.borrowEquipment = async (req, res, next) => {
   const session = await mongoose.startSession();
-
   try {
-    const { borrowDetails, department, purpose } = req.body;
+    console.log("📦 req.body =", JSON.stringify(req.body, null, 2));
+    
+    const { borrowDetails, department, purpose, note } = req.body;
 
-    if (!borrowDetails || borrowDetails.length === 0) {
+    if (!department) {
+      return res.status(400).json({ message: 'กรุณาระบุกองงาน' });
+    }
+
+    if (!Array.isArray(borrowDetails) || borrowDetails.length === 0) {
       return res.status(400).json({ message: 'ไม่มีรายการอุปกรณ์ที่ต้องการเบิก' });
     }
 
@@ -21,24 +25,33 @@ exports.borrowEquipment = async (req, res) => {
     const equipmentNames = [];
     const equipmentCodes = [];
     const items = [];
+    let allConsumable = true;
 
     for (const item of borrowDetails) {
-      const qty = Number(item.borrowQuantity);
+      const qty = Number(item.quantity);
+      const equipmentId = item.equipment;
 
-      // ✅ Guard input
+      console.log(`🔍 Processing: equipmentId=${equipmentId}, qty=${qty}`);
+
+      if (!mongoose.Types.ObjectId.isValid(equipmentId)) {
+        throw new Error(`equipmentId ไม่ถูกต้อง: ${equipmentId}`);
+      }
       if (!Number.isFinite(qty) || qty <= 0) {
-        throw new Error('จำนวนเบิกไม่ถูกต้อง');
+        throw new Error(`จำนวนเบิกไม่ถูกต้อง: ${qty}`);
       }
 
-      // ✅ Atomic stock update (กัน race condition)
       const equipment = await Equipment.findOneAndUpdate(
-        { _id: item._id, available: { $gte: qty } },
+        { _id: equipmentId, available: { $gte: qty } },
         { $inc: { available: -qty } },
         { new: true, session }
       );
 
       if (!equipment) {
-        throw new Error(`อุปกรณ์ไม่พอในคลัง`);
+        throw new Error(`อุปกรณ์มีไม่พอ หรือถูกเบิกไปแล้ว`);
+      }
+
+      if (equipment.type !== 'consumable') {
+        allConsumable = false;
       }
 
       equipmentNames.push(equipment.name);
@@ -50,20 +63,34 @@ exports.borrowEquipment = async (req, res) => {
       });
     }
 
-    const borrow = new Borrow({
+    console.log("📝 Creating borrow with:", {
       department,
       purpose,
-      status: 'ยืมอยู่',
-      items
+      status: allConsumable ? 'เสร็จสิ้น' : 'ยืมอยู่',
+      itemsCount: items.length
     });
 
+    const borrow = new Borrow({
+    department,
+    purpose,
+    note: note || '',   
+    status: allConsumable ? 'เสร็จสิ้น' : 'ยืมอยู่',
+    items
+  });
+
     await borrow.save({ session });
+    console.log(`✅ สร้าง borrow สำเร็จ ID: ${borrow._id}`);
+
+    const descriptionText = [
+      `เบิก ${borrowDetails.length} รายการ`,
+      ...borrowDetails.map((item, i) => `${i + 1}. ${equipmentNames[i]} ${item.quantity} ชิ้น`)
+    ].join('|');
 
     await ActivityLog.create([{
       action: 'BORROW',
       referenceId: borrow._id,
       department,
-      description: `เบิก ${items.length} รายการ (${equipmentNames.join(', ')})`,
+      description: descriptionText,   
       equipmentName: equipmentNames.join(', '),
       equipmentCode: equipmentCodes.join(', ')
     }], { session });
@@ -71,20 +98,19 @@ exports.borrowEquipment = async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    res.json(borrow);
+    res.status(200).json({ message: 'เบิกสำเร็จ', borrow });
 
   } catch (err) {
+    console.error("❌ Error in borrowEquipment:", err);
     await session.abortTransaction();
     session.endSession();
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
 /* ================= RETURN ================= */
-
-exports.returnEquipment = async (req, res) => {
+exports.returnEquipment = async (req, res, next) => {   // ← เพิ่ม next
   const session = await mongoose.startSession();
-
   try {
     const { id } = req.params;
     const { returns } = req.body;
@@ -98,122 +124,173 @@ exports.returnEquipment = async (req, res) => {
     const borrow = await Borrow.findById(id)
       .populate('items.equipment')
       .session(session);
-
     if (!borrow) throw new Error('ไม่พบใบยืม');
 
     for (const r of returns) {
       const item = borrow.items.id(r.itemId);
       if (!item) throw new Error('ไม่พบรายการอุปกรณ์');
 
+      const equipment = item.equipment;
+      if (equipment.type === 'consumable') continue;
+
       const returnQty = Number(r.returnQty || 0);
       const damagedQty = Number(r.damagedQty || 0);
 
-      // ✅ Guard input
+      if (r.note) {
+        item.returnNote = r.note;
+      }
+
       if (!Number.isFinite(returnQty) || !Number.isFinite(damagedQty)) {
         throw new Error('จำนวนคืนไม่ถูกต้อง');
       }
-
       if (returnQty < 0 || damagedQty < 0) {
         throw new Error('จำนวนคืนติดลบไม่ได้');
       }
 
-      if (item.returnedQty + item.damagedQty > item.quantity) {
-        throw new Error('ข้อมูล Borrow เสีย (returned > quantity)');
+      const remaining = item.quantity - (item.returnedQty || 0) - (item.damagedQty || 0);
+      if (returnQty + damagedQty > remaining) {
+        throw new Error(`คืนเกินจำนวน (${equipment.name})`);
       }
 
-      const remaining = item.quantity - item.returnedQty - item.damagedQty;
-
-
-            if (returnQty + damagedQty > remaining) {
-        throw new Error(`คืนเกินจำนวน (${item.equipment.name})`);
-      }
-
-      item.returnedQty += returnQty;
-      item.damagedQty += damagedQty;
+      item.returnedQty = (item.returnedQty || 0) + returnQty;
+      item.damagedQty = (item.damagedQty || 0) + damagedQty;
 
       if (returnQty > 0) {
-        const equipment = await Equipment.findById(item.equipment._id)
-          .session(session);
+        const updated = await Equipment.findOneAndUpdate(
+          { _id: equipment._id, available: { $lte: equipment.total - returnQty } },
+          { $inc: { available: returnQty } },
+          { new: true, session }
+        );
 
-        if (!equipment) throw new Error('ไม่พบอุปกรณ์');
-
-        // ✅ Guard corruption
-        if (equipment.available + returnQty > equipment.total) {
+        if (!updated) {
           throw new Error('available เกิน total (data corruption)');
         }
-
-        equipment.available += returnQty;
-        await equipment.save({ session });
       }
 
       if (damagedQty > 0) {
         const repair = new Repair({
-          equipment: item.equipment._id,
+          equipment: equipment._id,
           borrow: borrow._id,
           department: borrow.department,
           damagedQty
         });
-
         await repair.save({ session });
       }
     }
 
-    const allReturned = borrow.items.every(i =>
-      i.quantity === i.returnedQty + i.damagedQty
+    const allReturned = borrow.items
+    .filter(i => i.equipment.type !== 'consumable')
+    .every(i =>
+      i.quantity === (i.returnedQty || 0) + (i.damagedQty || 0)
     );
-
     if (allReturned) borrow.status = 'คืนแล้ว';
-
     await borrow.save({ session });
 
-    const names = borrow.items.map(i => i.equipment.name);
-    const codes = borrow.items.map(i => i.equipment.code);
+    const equipmentNames = borrow.items.map(i => i.equipment?.name).filter(Boolean);
+    const equipmentCodes = borrow.items.map(i => i.equipment?.code).filter(Boolean);
+
+    const returnDetails = borrow.items
+    .filter(i => (i.returnedQty || 0) > 0 || (i.damagedQty || 0) > 0)
+    .map(i => {
+      const name = i.equipment?.name;
+      const normal = i.returnedQty || 0;
+      const damaged = i.damagedQty || 0;
+
+      return `${name} (ปกติ ${normal}, ชำรุด ${damaged})`;
+    });
 
     await ActivityLog.create([{
       action: 'RETURN',
       referenceId: borrow._id,
       department: borrow.department,
-      description: `คืนอุปกรณ์ (${borrow.department})`,
-      equipmentName: names.join(', '),
-      equipmentCode: codes.join(', ')
+      description: returnDetails.join('|'),
+      equipmentName: equipmentNames.join(', '),
+      equipmentCode: equipmentCodes.join(', ')
     }], { session });
 
     await session.commitTransaction();
     session.endSession();
-
     res.json({ message: 'คืนอุปกรณ์สำเร็จ', borrow });
 
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
 
 /* ================= GET ACTIVE ================= */
-
-exports.getActiveBorrows = async (req, res) => {
+exports.getActiveBorrows = async (req, res, next) => {
   try {
     const borrows = await Borrow.find({ status: 'ยืมอยู่' })
       .populate('items.equipment');
 
-    res.json(borrows);
-
+    const filtered = borrows.map(b => ({
+      ...b.toObject(),
+      items: b.items.filter(i => i.equipment.type !== 'consumable')
+    }));
+    res.json(filtered);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    next(err);
   }
 };
 
 /* ================= GET ALL ================= */
-
-exports.getAllBorrows = async (req, res) => {
+exports.getAllBorrows = async (req, res, next) => {
   try {
-    const borrows = await Borrow.find()
-      .populate('items.equipment');
-
+    const borrows = await Borrow.find().populate('items.equipment');
     res.json(borrows);
+  } catch (err) {
+    next(err);
+  }
+};
+
+/* ================= DELETE ================= */
+exports.deleteBorrow = async (req, res, next) => {
+  const session = await mongoose.startSession();
+  try {
+    session.startTransaction();
+
+    const borrow = await Borrow.findById(req.params.id)
+      .populate('items.equipment')
+      .session(session);
+    if (!borrow) throw new Error('ไม่พบใบยืม');
+
+    for (const item of borrow.items) {
+
+  const equipment = item.equipment;
+
+  if (borrow.status !== 'ยืมอยู่') continue;
+  if (equipment.type === 'consumable') continue;
+
+  const borrowedQty = item.quantity;
+  const returnedQty = item.returnedQty || 0;
+  const damagedQty = item.damagedQty || 0;
+
+  const stillOut = borrowedQty - returnedQty - damagedQty;
+
+  if (stillOut <= 0) continue;
+
+  const updated = await Equipment.findOneAndUpdate(
+    { _id: equipment._id, available: { $lte: equipment.total - stillOut } },
+    { $inc: { available: stillOut } },
+    { new: true, session }
+  );
+
+  if (!updated) {
+    throw new Error('available เกิน total');
+  }
+}  // ✅ ปิด loop แค่ครั้งเดียว
+
+await Borrow.findByIdAndDelete(req.params.id).session(session);
+
+    await session.commitTransaction();
+    session.endSession();
+    res.json({ message: 'ลบใบยืมสำเร็จ' });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    await session.abortTransaction();
+    session.endSession();
+    next(err);
   }
 };

@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 
 module.exports = function (req, res, next) {
+    console.log('🔥 AUTH MIDDLEWARE HIT');
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {

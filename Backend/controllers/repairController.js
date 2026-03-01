@@ -20,6 +20,7 @@ exports.getRepairs = async (req, res) => {
 };
 
 
+
 /**
  * PUT /api/repair/:id/complete
  * เปลี่ยนสถานะเป็น "ซ่อมเสร็จ"
@@ -38,7 +39,6 @@ exports.completeRepair = async (req, res) => {
       return res.status(400).json({ message: 'รายการนี้ซ่อมเสร็จแล้ว' });
     }
 
-    /** ✅ เพิ่มของกลับเข้าคลัง (เฉพาะ available) */
     const equipment = await Equipment.findById(repair.equipment._id);
 
     if (!equipment) {
@@ -54,12 +54,10 @@ exports.completeRepair = async (req, res) => {
     equipment.available += repair.damagedQty;
     await equipment.save();
 
-
-    /** ✅ เปลี่ยนสถานะ */
     repair.status = 'ซ่อมเสร็จ';
+    repair.completedDate = new Date();   // ⭐ ตัวสำคัญ
     await repair.save();
 
-    /** ✅ บันทึก Activity Log */
     await ActivityLog.create({
       action: 'REPAIR_COMPLETE',
       referenceId: repair._id,
@@ -72,6 +70,20 @@ exports.completeRepair = async (req, res) => {
     res.json({
       message: 'ซ่อมเสร็จเรียบร้อย',
       repair
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteCompletedRepairs = async (req, res) => {
+  try {
+    const result = await Repair.deleteMany({ status: 'ซ่อมเสร็จ' });
+
+    res.json({
+      message: 'ลบรายการซ่อมเสร็จแล้วเรียบร้อย',
+      deletedCount: result.deletedCount
     });
 
   } catch (err) {

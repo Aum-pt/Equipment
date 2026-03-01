@@ -1,5 +1,3 @@
-/* EquipmentTable.css - ตารางธีมสีเทา-ดำ-เหลือง */
-
 .equipment-table-container {
   background: rgba(26, 32, 44, 0.8);
   border-radius: 12px;
@@ -7,8 +5,12 @@
   overflow: hidden;
 }
 
+.equipment-table-container {
+  margin-top: -10px;
+}
+
 .table-header-section {
-  padding: 20px 24px;
+  padding: 12px 20px;  
   border-bottom: 1px solid #4a5568;
   background: rgba(45, 55, 72, 0.5);
 }
@@ -67,7 +69,8 @@
 .equipment-table th {
   background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
   padding: 16px 12px;
-  text-align: left;
+  text-align: center;   /* ✅ อันเดียวพอ */
+  vertical-align: middle;
   font-weight: 600;
   font-size: 14px;
   color: #d69e2e;
@@ -89,7 +92,7 @@
 }
 
 .equipment-table td {
-  padding: 16px 12px;
+  padding: 12px 10px;
   border-bottom: 1px solid #2d3748;
   vertical-align: middle;
   color: #e2e8f0;
@@ -98,6 +101,7 @@
 
 .equipment-table tbody tr {
   background: rgba(26, 32, 44, 0.5);
+  height: 48px;  /* บังคับความสูงให้พอดี */
   transition: all 0.3s ease;
   position: relative;
 }
@@ -233,7 +237,7 @@
 /* Action Buttons */
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 12px;
   justify-content: center;
 }
 
@@ -250,6 +254,7 @@
   border: none;
   min-width: 80px;
   justify-content: center;
+  margin: 0 2px;    
 }
 
 .btn-edit, .btn-save {
@@ -338,6 +343,23 @@
   font-size: 14px;
   color: #718096;
 }
+
+.type-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
+.type-badge.reusable {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.type-badge.consumable {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
 
 /* Responsive Table */
 @media (max-width: 768px) {

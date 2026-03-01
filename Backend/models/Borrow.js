@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// รายการอุปกรณ์ในใบยืม
 const borrowItemSchema = new mongoose.Schema({
   equipment: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,15 +13,29 @@ const borrowItemSchema = new mongoose.Schema({
   },
   returnedQty: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
+
+  returnNote: {      
+    type: String,
+    default: ''
+  },
+
   damagedQty: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   }
 });
 
-// ใบยืม (Borrow Transaction)
+/* ⭐ ใส่ตรงนี้ */
+borrowItemSchema.pre('save', function () {
+  if (this.returnedQty + this.damagedQty > this.quantity) {
+    throw new Error('returnedQty + damagedQty เกิน quantity');
+  }
+});
+
 const borrowSchema = new mongoose.Schema({
   department: {
     type: String,
@@ -34,20 +47,25 @@ const borrowSchema = new mongoose.Schema({
     enum: ['ติดตั้ง', 'ซ่อมบำรุง'],
     required: true
   },
+
+  note: {                    
+    type: String,
+    default: ''
+  },
+
   borrowDate: {
     type: Date,
     default: Date.now
   },
   status: {
     type: String,
-    enum: ['ยืมอยู่', 'คืนแล้ว'],
+    enum: ['ยืมอยู่', 'คืนแล้ว', 'เสร็จสิ้น'],
     default: 'ยืมอยู่'
   },
   items: {
     type: [borrowItemSchema],
     required: true
   }
-});
+}, { timestamps: true });
 
-borrowSchema.index({ status: 1 });
 module.exports = mongoose.model('Borrow', borrowSchema);

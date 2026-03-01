@@ -107,7 +107,6 @@ body {
   font-weight: 600;
 }
 
-
 .stat-card__value {
   font-size: 28px;
   font-weight: 800;
@@ -123,6 +122,15 @@ body {
   font-weight: 500;
 }
 
+.clickable {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
 
 /* ================= CHARTS ================= */
 
@@ -164,7 +172,8 @@ body {
 
 .chart-container {
   width: 100%;
-  height: 260px;    /* ⭐ ลดความสูง */
+  height: 300px; /* หรือตามต้องการ */
+  min-width: 0; /* ป้องกัน flex/grid บีบ */
 }
 
 /* ================= LISTS ================= */

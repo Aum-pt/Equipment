@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import '../styles/App.css';
 
 function Navbar() {
+
   const logout = () => {
-  localStorage.removeItem('token');
-  window.location.href = '/login';
-};
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+  };
 
   return (
     <nav className="navbar">
@@ -17,7 +18,9 @@ function Navbar() {
       <Link to="/repair">อุปกรณ์ซ่อม</Link>
       <Link to="/history">ประวัติการใช้งาน</Link>
 
-      {/* ✅ ปุ่ม Logout */}
+      {/* ✅ เพิ่มตรงนี้ */}
+      <Link to="/report">รายงาน</Link>
+
       <button onClick={logout} className="logout-btn">
         Logout
       </button>

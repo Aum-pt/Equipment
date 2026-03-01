@@ -14,16 +14,26 @@ exports.getDashboardStats = async (req, res) => {
 
     /** ✅ ใกล้หมด */
     const lowStockCount = await Equipment.countDocuments({
+      type: 'consumable',
       available: { $gt: 0, $lte: LOW_STOCK_THRESHOLD }
     });
+
 
     const outOfStockCount = await Equipment.countDocuments({
       available: 0
     });
 
-    const lowStock = await Equipment.find({
-      available: { $gt: 0, $lte: LOW_STOCK_THRESHOLD }
+    const equipments = await Equipment.find();
+
+    const lowStock = equipments.filter(e => {
+      const threshold = e.low_stock_threshold || 5;
+      return (
+        e.type === 'reusable' &&
+        e.available > 0 &&
+        e.available <= threshold
+      );
     });
+
 
     const outOfStock = await Equipment.find({
       available: 0

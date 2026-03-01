@@ -295,9 +295,50 @@ body {
   line-height: 1;
 }
 
-/* Table Section */
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Available - เขียวอ่อนนุ่ม */
+.status-badge.status-available {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+/* Low - เหลืองอ่อน */
+.status-badge.status-low {
+  background: rgba(250, 204, 21, 0.14);
+  color: #fde68a;
+  border-color: rgba(250, 204, 21, 0.30);
+}
+
+/* Out - แดงนุ่ม */
+.status-badge.status-out {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.30);
+}
+
+
+/* Hover Effect */
+.status-badge:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
 .table-section {
   padding: 0 30px;
+  margin-top: -5px;
 }
 
 .section-header {
@@ -443,6 +484,7 @@ body {
   font-weight: 500;
   color: #e2e8f0;
   margin-bottom: 8px;
+  margin-top: 8px; 
 }
 
 .required-asterisk {
@@ -561,7 +603,7 @@ body {
   }
   
   .action-section {
-    padding: 20px;
+  padding: 20px 30px 10px 30px;
     flex-direction: column;
     gap: 15px;
   }

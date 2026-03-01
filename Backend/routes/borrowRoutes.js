@@ -17,10 +17,13 @@ router.get('/active', auth, borrowController.getActiveBorrows);
 // Actions
 // =======================
 
-// เบิกอุปกรณ์
-router.post('/borrow', auth, borrowController.borrowEquipment);
+// เบิกอุปกรณ์ - เปลี่ยนจาก '/borrow' เป็น '/'
+router.post('/', auth, borrowController.borrowEquipment);
 
 // คืนอุปกรณ์
 router.post('/return/:id', auth, borrowController.returnEquipment);
+
+// ลบใบยืม
+router.delete('/:id', auth, borrowController.deleteBorrow);
 
 module.exports = router;

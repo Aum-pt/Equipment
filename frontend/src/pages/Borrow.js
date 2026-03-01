@@ -29,138 +29,139 @@ export default function Borrow() {
     loadEquipments();
   }, []);
 
-  const handleQuantityChange = (equipmentId, quantity) => {
-    const equipment = equipments.find(e => e._id === equipmentId);
-    if (!equipment) return;
+const handleQuantityChange = (equipmentId, quantity) => {
+  const equipment = equipments.find(e => e._id === equipmentId);
+  if (!equipment) return;
 
-    const maxQuantity = equipment.available;
+  const maxQuantity = equipment.available ?? equipment.total ?? 0;
 
-    const newQuantity = Math.min(
-      Math.max(0, quantity),
-      maxQuantity
-    );
-
-    setQuantities(prev => ({
-      ...prev,
-      [equipmentId]: newQuantity
-    }));
-
-    if (newQuantity > 0) {
-      setSelectedEquipments(prev => {
-        const exists = prev.some(item => item._id === equipmentId);
-
-        if (exists) {
-          return prev.map(item =>
-            item._id === equipmentId
-              ? { ...item, borrowQuantity: newQuantity }
-              : item
-          );
-        }
-
-        return [...prev, { ...equipment, borrowQuantity: newQuantity }];
-      });
-    } else {
-      setSelectedEquipments(prev =>
-        prev.filter(item => item._id !== equipmentId)
-      );
-    }
-  };
-
-  const toggleSelectEquipment = (equipment) => {
-  const isSelected = selectedEquipments.some(
-    item => item._id === equipment._id
+  const newQuantity = Math.min(
+    Math.max(0, quantity),
+    maxQuantity
   );
-
-  if (isSelected) {
-    // ยกเลิกเลือก
-    setSelectedEquipments(prev =>
-      prev.filter(item => item._id !== equipment._id)
-    );
-
-    setQuantities(prev => {
-      const newQuantities = { ...prev };
-      delete newQuantities[equipment._id];
-      return newQuantities;
-    });
-
-  } else {
-
-  if (equipment.available === 0) return; 
-
-  setSelectedEquipments(prev => [
-    ...prev,
-    { ...equipment, borrowQuantity: 1 }
-  ]);
 
   setQuantities(prev => ({
     ...prev,
-    [equipment._id]: 1
+    [equipmentId]: newQuantity
   }));
-}
-}; 
 
-  const handleConfirmBorrow = async (data) => {
-    try {
-      const { borrowDetails, department, purpose } = data;
+  if (newQuantity > 0) {
+    setSelectedEquipments(prev => {
+      const exists = prev.some(item => item._id === equipmentId);
 
-      const validBorrowDetails = borrowDetails.filter(
-        item => item.borrowQuantity > 0
-      );
-
-      if (validBorrowDetails.length === 0) {
-        alert('ไม่มีอุปกรณ์ที่ระบุจำนวนการเบิก');
-        return;
+      if (exists) {
+        return prev.map(item =>
+          item._id === equipmentId
+            ? { ...item, borrowQuantity: newQuantity }
+            : item
+        );
       }
 
-      const borrowData = {
-        borrowDetails: validBorrowDetails,
-        totalItems: validBorrowDetails.length,
-        totalQuantity: validBorrowDetails.reduce(
-          (sum, item) => sum + item.borrowQuantity,
-          0
-        ),
-        borrowDate: new Date().toISOString(),
-        department,
-        purpose
-      };
+      return [...prev, { ...equipment, borrowQuantity: newQuantity }];
+    });
+  } else {
+    setSelectedEquipments(prev =>
+      prev.filter(item => item._id !== equipmentId)
+    );
+  }
+};
 
-      await borrowEquipment(borrowData);
 
-      alert(`เบิกอุปกรณ์เรียบร้อย!
-จำนวนรายการ: ${borrowData.totalItems}
-จำนวนชิ้น: ${borrowData.totalQuantity}`);
+  const toggleSelectEquipment = (equipment) => {
+    const isSelected = selectedEquipments.some(
+      item => item._id === equipment._id
+    );
 
-      setSelectedEquipments([]);
-      setQuantities({});
-      setShowBorrowForm(false);
-
-      loadEquipments();
-    } catch (err) {
-      console.error('Failed to borrow equipment:', err);
-      alert(
-        'เกิดข้อผิดพลาดในการเบิกอุปกรณ์: ' +
-        (err.response?.data?.message || err.message)
+    if (isSelected) {
+      setSelectedEquipments(prev =>
+        prev.filter(item => item._id !== equipment._id)
       );
+
+      setQuantities(prev => {
+        const newQuantities = { ...prev };
+        delete newQuantities[equipment._id];
+        return newQuantities;
+      });
+
+    } else {
+      const available = equipment.available ?? equipment.total ?? 0;
+      if (available === 0) return;
+
+
+      setSelectedEquipments(prev => [
+        ...prev,
+        { ...equipment, borrowQuantity: 1 }
+      ]);
+
+      setQuantities(prev => ({
+        ...prev,
+        [equipment._id]: 1
+      }));
     }
   };
 
-  const filteredEquipments = equipments.filter(e =>
-    e.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    e.code.toLowerCase().includes(searchTerm.toLowerCase())
+  const handleConfirmBorrow = async (data) => {
+  try {
+    const { borrowDetails, department, purpose, note } = data;
+
+    if (!Array.isArray(borrowDetails) || borrowDetails.length === 0) {
+      alert('ไม่มีรายการอุปกรณ์ที่ต้องการเบิก');
+      return;
+    }
+
+    const borrowData = {
+      borrowDetails,
+      department,
+      purpose: purpose?.trim() || '-',
+      note: note?.trim() || ''   
+    };
+
+
+    console.log('📦 SEND TO BACKEND:', borrowData);
+
+    await borrowEquipment(borrowData);
+
+    alert(`เบิกอุปกรณ์เรียบร้อย!
+จำนวนรายการ: ${borrowDetails.length}
+จำนวนชิ้น: ${borrowDetails.reduce((s, i) => s + i.quantity, 0)}`);
+
+    setSelectedEquipments([]);
+    setQuantities({});
+    setShowBorrowForm(false);
+
+    loadEquipments();
+
+  } catch (err) {
+    console.error('Failed to borrow equipment:', err);
+    alert(
+      'เกิดข้อผิดพลาดในการเบิกอุปกรณ์: ' +
+      (err.response?.data?.message || err.message)
+    );
+  }
+};
+
+    const filteredEquipments = equipments.filter(e =>
+    (e.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (e.code || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const getStatus = (available) => {
-    if (available === 0) return { text: 'หมดสต็อก', type: 'out' };
-    if (available <= LOW_STOCK_THRESHOLD) return { text: 'เหลือน้อย', type: 'low' };
+   const getStatus = (equipment) => {
+   const available = equipment.available ?? equipment.total ?? 0;
+
+    if (available === 0)
+      return { text: 'หมดสต็อก', type: 'out' };
+
+    if (
+      equipment.type === 'reusable' &&
+      available <= LOW_STOCK_THRESHOLD
+    )
+      return { text: 'เหลือน้อย', type: 'low' };
+
     return { text: 'พร้อมใช้งาน', type: 'available' };
   };
 
   const totalSelectedQuantity = Object.values(quantities)
     .reduce((sum, qty) => sum + qty, 0);
-
-  const hasZeroQuantityItems = selectedEquipments.some(
-    item => (quantities[item._id] || 0) === 0
-  );
 
   if (loading) {
     return (
@@ -211,15 +212,19 @@ export default function Borrow() {
         <div className="selection-info">
           <div className="selected-stats">
             <div className="selected-count">
-              เลือกแล้ว: <span className="count-number">
+              เลือกแล้ว:
+              <span className="count-number">
                 {selectedEquipments.length}
-              </span> รายการ
+              </span>
+              รายการ
             </div>
 
             <div className="total-quantity">
-              จำนวน: <span className="quantity-number">
+              จำนวน:
+              <span className="quantity-number">
                 {totalSelectedQuantity}
-              </span> ชิ้น
+              </span>
+              ชิ้น
             </div>
           </div>
 
@@ -234,90 +239,117 @@ export default function Borrow() {
 
       </div>
 
-      {hasZeroQuantityItems && (
-        <div className="zero-quantity-warning">
-          ⚠️ มีอุปกรณ์ที่เลือกแต่ยังไม่ได้ระบุจำนวน
-        </div>
-      )}
-
       <div className="table-section">
-        <table className="equipment-table">
-          <thead>
-            <tr>
-              <th>เลือก</th>
-              <th>รหัสอุปกรณ์</th>
-              <th>ชื่ออุปกรณ์</th>
-              <th>จำนวนในคลัง</th>
-              <th>สถานะ</th>
-              <th>จำนวนที่เบิก</th>
-            </tr>
-          </thead>
+        <div className="equipment-table-container">
+          <div className="table-scroll-container">
 
-          <tbody>
-            {filteredEquipments.map(e => {
-              const isSelected = selectedEquipments.some(
-                item => item._id === e._id
-              );
-
-              const currentQuantity = quantities[e._id] || 0;
-              const status = getStatus(e.available);
-              const availableQuantity = e.available;
-
-              return (
-                <tr
-                  key={e._id}
-                  className={`${isSelected ? 'selected-row' : ''}`}
-                >
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
-                      onChange={() => toggleSelectEquipment(e)}
-                      disabled={availableQuantity === 0}
-                    />
-                  </td>
-
-                  <td>{e.code}</td>
-                  <td>{e.name}</td>
-                  <td>{availableQuantity}</td>
-
-                  <td>
-                    <span className={`status-badge status-${status.type}`}>
-                      {status.text}
-                    </span>
-                  </td>
-
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(e._id, currentQuantity - 1)
-                      }
-                    >-</button>
-
-                    <input
-                      type="number"
-                      value={currentQuantity}
-                      min="0"
-                      max={availableQuantity}
-                      onChange={(ev) =>
-                        handleQuantityChange(
-                          e._id,
-                          parseInt(ev.target.value) || 0
-                        )
-                      }
-                    />
-
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(e._id, currentQuantity + 1)
-                      }
-                    >+</button>
-                  </td>
+            <table className="equipment-table">
+              <thead>
+                <tr>
+                  <th>เลือก</th>
+                  <th>รหัสอุปกรณ์</th>
+                  <th>ชื่ออุปกรณ์</th>
+                  <th>ประเภท</th>
+                  <th>คงเหลือ</th>
+                  <th>สถานะ</th>
+                  <th>จำนวนที่เบิก</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+
+              <tbody>
+                {filteredEquipments.map(e => {
+                  const isSelected = selectedEquipments.some(
+                    item => item._id === e._id
+                  );
+
+                  const currentQuantity = quantities[e._id] || 0;
+                  const status = getStatus(e);
+                  const availableQuantity = e.available ?? e.total ?? 0;
+
+                  return (
+                    <tr
+                      key={e._id}
+                      className={isSelected ? 'selected-row' : ''}
+                    >
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleSelectEquipment(e)}
+                          disabled={availableQuantity === 0}
+                        />
+                      </td>
+
+                      <td>{e.code}</td>
+
+                      <td>{e.name}</td>
+
+                      <td>
+                        {e.type === 'consumable'
+                          ? 'ใช้แล้วหมด'
+                          : 'ใช้ซ้ำได้'}
+                      </td>
+
+                        <td>{availableQuantity}</td>
+                      <td>
+                        <span className={`status-badge status-${status.type}`}>
+                          {status.text}
+                        </span>
+                      </td>
+
+                      <td className="quantity-cell">
+                      <div className="quantity-wrapper">
+                        <div className="quantity-control">
+
+                          <button
+                            className="quantity-btn"
+                            onClick={() =>
+                              handleQuantityChange(e._id, currentQuantity - 1)
+                            }
+                            disabled={currentQuantity <= 0}
+                          >
+                            −
+                          </button>
+
+                          <input
+                            type="number"
+                            className="quantity-input"
+                            value={currentQuantity}
+                            min="0"
+                            max={availableQuantity}
+                            onChange={(ev) =>
+                              handleQuantityChange(
+                                e._id,
+                                parseInt(ev.target.value) || 0
+                              )
+                            }
+                          />
+
+                          <button
+                            className="quantity-btn"
+                            onClick={() =>
+                              handleQuantityChange(e._id, currentQuantity + 1)
+                            }
+                            disabled={currentQuantity >= availableQuantity}
+                          >
+                            +
+                          </button>
+
+                        </div>
+
+                        <div className="quantity-max">
+                          สูงสุด {availableQuantity}
+                        </div>
+                      </div>  
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
       </div>
 
       {showBorrowForm && (

@@ -234,8 +234,9 @@
 /* Borrow Details Form */
 .borrow-details-form {
   padding: 24px;
-  overflow-y: auto;
-  max-height: calc(90vh - 400px);
+  height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 .form-section {
@@ -380,7 +381,6 @@
   font-size: 16px;
 }
 
-/* Responsive Design for Modal */
 @media (max-width: 768px) {
   .borrow-form-container {
     max-width: 95%;
@@ -438,3 +438,90 @@
     padding: 6px 12px;
   }
 }
+
+.borrow-form-container {
+  width: 100%;
+  max-width: 100%;
+  max-height: 95vh;
+}
+
+.borrow-summary {
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.form-row {
+  grid-template-columns: 1fr;
+}
+
+.form-footer {
+  flex-direction: column;
+}
+
+.btn {
+  width: 100%;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .borrow-form-container {
+    max-width: 700px;
+  }
+
+  .borrow-summary {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .form-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .btn {
+    width: auto;
+  }
+}
+
+
+.full-width {
+  width: 100%;
+}
+
+.form-textarea-large {
+  width: 100%;
+  min-height: 110px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 2px solid #4a5568;
+  background: rgba(15, 23, 42, 0.95);
+  color: #ffffff;
+  font-size: 14px;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.form-textarea-large::placeholder {
+  color: #718096;
+}
+
+.form-textarea-large:focus {
+  outline: none;
+  border-color: #d69e2e;
+  box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.25);
+  background: rgba(26, 32, 44, 1);
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .borrow-form-container {
+    max-width: 800px;
+  }
+}
+
+

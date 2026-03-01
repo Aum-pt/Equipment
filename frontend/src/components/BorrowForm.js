@@ -21,23 +21,31 @@ export default function BorrowForm({
       return;
     }
 
-    const borrowDetails = selectedEquipments.map(item => ({
-      ...item,
-      borrowQuantity: quantities[item._id] || 0
-    }));
+    const borrowDetails = selectedEquipments
+    .map(item => ({
+      equipment: item._id,
+      quantity: Number(quantities[item._id] || 0)
+    }))
+    .filter(item => item.quantity > 0);
+
+  if (borrowDetails.length === 0) {
+    alert('กรุณาระบุจำนวนที่ต้องการเบิก');
+    return;
+  }
+
 
     onConfirm({
       borrowDetails,
       department: form.department,
-      purpose: form.purpose
+      purpose: form.purpose,
+      note: form.note    
     });
-  };   // ← ต้องมีตัวนี้
+  };  
 
   const totalQuantity = selectedEquipments.reduce(
-    (sum, item) => sum + (quantities[item._id] || 0),
-    0
+  (sum, item) => sum + Number(quantities[item._id] || 0),
+  0
   );
-
 
   return (
     <div 
@@ -103,34 +111,53 @@ export default function BorrowForm({
             <h4>รายละเอียดการเบิก</h4>
 
             <div className="form-row">
-              <div className="form-group">
-                <label className="form-label">กองงาน</label>
-                <select
-                  name="department"
-                  value={form.department}
-                  onChange={(e) => setForm({ ...form, department: e.target.value })}
-                  className="form-select"
-                >
-                  <option value="กองงาน1">กองงาน 1</option>
-                  <option value="กองงาน2">กองงาน 2</option>
-                  <option value="กองงาน3">กองงาน 3</option>
-                </select>
+                <div className="form-group">
+                  <label className="form-label">กองงาน</label>
+                  <select
+                    name="department"
+                    value={form.department}
+                    onChange={(e) =>
+                      setForm({ ...form, department: e.target.value })
+                    }
+                    className="form-select"
+                  >
+                    <option value="กองงาน1">กองงาน1</option>
+                    <option value="กองงาน2">กองงาน2</option>
+                    <option value="กองงาน3">กองงาน3</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">ประเภทการเบิก</label>
+                  <select
+                    name="purpose"
+                    value={form.purpose}
+                    onChange={(e) =>
+                      setForm({ ...form, purpose: e.target.value })
+                    }
+                    className="form-select"
+                  >
+                    <option value="ติดตั้ง">ติดตั้ง</option>
+                    <option value="ซ่อมบำรุง">ซ่อมบำรุง</option>
+                  </select>
+                </div>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">ประเภทการเบิก</label>
-                <select
-                  name="purpose"
-                  value={form.purpose}
-                  onChange={(e) => setForm({ ...form, purpose: e.target.value })}
-                  className="form-select"
-                >
-                  <option value="ติดตั้ง">ติดตั้ง</option>
-                  <option value="ซ่อมบำรุง">ซ่อมบำรุง</option>
-                </select>
+              {/* หมายเหตุเต็มแถว */}
+              <div className="form-group full-width">
+                <label className="form-label">หมายเหตุ</label>
+                <textarea
+                  name="note"
+                  value={form.note || ''}
+                  onChange={(e) =>
+                    setForm({ ...form, note: e.target.value })
+                  }
+                  className="form-textarea-large"
+                  rows="4"
+                  placeholder="ระบุรายละเอียดเพิ่มเติม เช่น สถานที่ติดตั้ง, ผู้รับผิดชอบ, หมายเลขงาน..."
+                />
               </div>
             </div>
-          </div>
 
           <div className="form-footer">
             <button 

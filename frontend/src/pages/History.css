@@ -2,21 +2,13 @@
   min-height: 100vh;
   background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
   color: #e2e8f0;
-  padding-bottom: 40px;
 }
 
-
-
-/* ✅ ใช้ header สไตล์เดียวกับ Equipment */
 .dashboard-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 20px 30px;
   background: rgba(26, 32, 44, 0.95);
   border-bottom: 2px solid #d69e2e;
-  backdrop-filter: blur(10px);
+  margin-bottom: 10px;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -36,8 +28,12 @@
   margin-top: 4px;
 }
 
+.history-content {
+  width: 100%;
+  padding: 10px 20px;
+  margin-top: -10px;
+}
 
-/* Empty */
 .empty-box {
   background: rgba(26, 32, 44, 0.8);
   border-radius: 12px;
@@ -47,97 +43,221 @@
   color: #718096;
 }
 
-/* Card */
 .history-card {
-  background: rgba(26, 32, 44, 0.9);
-  border-radius: 12px;
+  background: rgba(26, 32, 44, 0.95);
+  border-radius: 14px;
   border: 1px solid #4a5568;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
-/* ครอบส่วนเนื้อหา */
-.history-content {
-  padding: 30px;
-}
+.history-title {
+  font-size: 14px;
+  font-weight: bold;
+  color:#edebe4;
+  margin-bottom: 6px;
+} 
 
-.history-info {
+.history-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;   
+  padding-bottom: 0;
   margin-bottom: 8px;
-  color: #a0aec0;
-  line-height: 1.5;
 }
 
 .history-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: #d69e2e;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* Header Row */
 .history-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 14px 18px;
   background: rgba(45, 55, 72, 0.9);
-  padding: 15px 20px;
   border-bottom: 1px solid #4a5568;
 }
 
-/* Badge */
 .history-action-badge {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   border: 1px solid;
 }
 
-/* Action Colors */
 .ADD_EQUIPMENT {
-  background: rgba(214, 158, 46, 0.2);
+  background: rgba(214, 158, 46, 0.15);
   color: #d69e2e;
   border-color: #d69e2e;
 }
 
 .UPDATE_EQUIPMENT {
-  background: rgba(56, 161, 105, 0.2);
+  background: rgba(72, 187, 120, 0.15);
   color: #48bb78;
   border-color: #48bb78;
 }
 
 .DELETE_EQUIPMENT {
-  background: rgba(229, 62, 62, 0.2);
-  color: #fc8181;
-  border-color: #fc8181;
+  background: rgba(245, 101, 101, 0.15);
+  color: #f56565;
+  border-color: #f56565;
 }
 
 .BORROW {
-  background: rgba(66, 153, 225, 0.2);
+  background: rgba(99, 179, 237, 0.15);
   color: #63b3ed;
   border-color: #63b3ed;
 }
 
 .RETURN {
-  background: rgba(72, 187, 120, 0.2);
-  color: #48bb78;
-  border-color: #48bb78;
+  background: rgba(104, 211, 145, 0.15);
+  color: #68d391;
+  border-color: #68d391;
 }
 
 .REPAIR_COMPLETE {
-  background: rgba(237, 137, 54, 0.2);
+  background: rgba(237, 137, 54, 0.15);
   color: #ed8936;
   border-color: #ed8936;
 }
 
-/* Body */
+
 .history-body {
-  padding: 20px;
+  padding: 18px;
 }
 
-/* Date */
-.history-date {
+.history-description {
+  font-size: 15px;
+  margin-bottom: 8px;
+  color: #edf2f7;
+}
+
+.history-info {
   font-size: 13px;
   color: #a0aec0;
 }
 
+.history-info span {
+  color: #e2e8f0;
+}
+
+.history-date {
+  font-size: 12px;
+  color: #a0aec0;
+}
+
+.danger-btn {
+  background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.danger-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 1024px) {
+  .table-section,
+  .report-table-section,
+  .history-content {
+    padding: 20px;
+  }
+
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 13px;
+  }
+
+  .borrow-card,
+  .repair-card,
+  .history-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 18px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 12px;
+  }
+
+  /* ปรับ action bar ให้เรียงลง */
+  .report-action-section,
+  .repair-actions,
+  .history-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .report-search-container {
+    width: 100%;
+  }
+
+  .report-status-filter,
+  .report-date-filter,
+  .today-btn,
+  .clear-filter-btn,
+  .export-btn {
+    width: 100%;
+  }
+
+  .borrow-card-header,
+  .repair-card-header,
+  .history-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .return-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 16px;
+  }
+
+  .borrow-title,
+  .item-name {
+    font-size: 13px;
+  }
+
+  .item-info,
+  .borrow-meta {
+    font-size: 12px;
+  }
+
+  .status-badge,
+  .repair-status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+}

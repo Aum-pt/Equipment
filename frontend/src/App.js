@@ -17,7 +17,7 @@ function PrivateRoute({ children }) {
 }
 
 function App() {
-  const [token, setToken] = useState(null);   // ⭐ สำคัญมาก
+  const [token, setToken] = useState(null);  
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -26,8 +26,7 @@ function App() {
 
   return (
     <Router>
-      {token && <Navbar />}   {/* ⭐ ตอนนี้ React รู้แล้ว */}
-
+      {token && <Navbar />}   
       <Routes>
         <Route path="/login" element={<Login setToken={setToken} />} />
 

@@ -1,53 +1,121 @@
 const Borrow = require('../models/Borrow');
-const { createObjectCsvWriter } = require('csv-writer');
+const Repair = require('../models/Repair');
 
-// รายงานรายเดือน
-exports.monthlyReport = async (req, res) => {
-  try {
-    const { month, year } = req.query;
-    const start = new Date(year, month - 1, 1);
-    const end = new Date(year, month, 0);
+function calculateStatus({ borrow, repair }) {
 
-    // ดึงข้อมูลการเบิกในเดือนนั้น
-    const borrows = await Borrow.find({ date: { $gte: start, $lte: end } }).populate('equipment');
-
-    const summary = {};
-    borrows.forEach(b => {
-      if (!summary[b.equipment.name]) summary[b.equipment.name] = 0;
-      summary[b.equipment.name] += b.quantity;
-    });
-
-    res.json(summary);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  if (repair?.reportDate && !repair?.completedDate) {
+    return 'กำลังซ่อม';
   }
-};
 
-// export รายงานเป็น CSV
-exports.exportCSV = async (req, res) => {
+  if (repair?.completedDate) {
+    return 'คืนแล้ว';
+  }
+
+  if (borrow.status === 'เสร็จสิ้น') {
+    return 'เสร็จสิ้น';
+  }
+
+  if (borrow.status !== 'คืนแล้ว') {
+    return 'ยืมอยู่';
+  }
+
+  return borrow.status;
+}
+
+exports.getReport = async (req, res) => {
   try {
-    const borrows = await Borrow.find().populate('equipment');
-    const csvWriter = createObjectCsvWriter({
-      path: 'report.csv',
-      header: [
-        { id: 'equipment', title: 'Equipment' },
-        { id: 'quantity', title: 'Quantity' },
-        { id: 'department', title: 'Department' },
-        { id: 'purpose', title: 'Purpose' },
-        { id: 'date', title: 'Date' }
-      ]
-    });
+    const { date, status, search } = req.query;
 
-    const records = borrows.map(b => ({
-      equipment: b.equipment.name,
-      quantity: b.quantity,
-      department: b.department,
-      purpose: b.purpose,
-      date: b.date
-    }));
+    const borrows = await Borrow.find()
+      .populate('items.equipment')
+      .sort({ createdAt: -1 });
 
-    await csvWriter.writeRecords(records);
-    res.download('report.csv'); // ส่งไฟล์ให้ดาวน์โหลด
+    const repairs = await Repair.find();
+
+    const repairMap = new Map();
+
+    for (const repair of repairs) {
+      const key = `${repair.borrow}_${repair.equipment}`;
+      repairMap.set(key, repair);
+    }
+
+    let reportData = [];
+
+    for (const borrow of borrows) {
+      for (const item of borrow.items) {
+        const equipment = item.equipment;
+        if (!equipment) continue;
+
+        const key = `${borrow._id}_${equipment._id}`;
+        const repair = repairMap.get(key);
+
+        const calculatedStatus = calculateStatus({ borrow, repair });
+
+        reportData.push({
+          borrowId: borrow._id,
+
+          equipmentName: equipment.name,
+          equipmentCode: equipment.code,
+          quantity: item.quantity,
+
+          borrowDate: borrow.borrowDate,
+
+          returnDate: calculatedStatus === 'คืนแล้ว'
+            ? borrow.updatedAt
+            : null,
+
+          repairDate: repair?.reportDate || null,
+          repairCompletedDate: repair?.completedDate || null,
+
+          status: calculatedStatus,
+
+          /* ⭐ เพิ่มตรงนี้ */
+          borrowNote: borrow.note || '',
+          returnNote: item.returnNote || ''
+        });
+      }
+    }
+
+    // ===== SEARCH =====
+    if (search) {
+      reportData = reportData.filter(r =>
+        r.equipmentName?.toLowerCase()
+          .includes(search.toLowerCase())
+      );
+    }
+
+    // ===== STATUS =====
+    if (status) {
+      reportData = reportData.filter(r => r.status === status);
+    }
+
+    // ===== SINGLE DATE FILTER =====
+    function isSameDay(d1, d2) {
+      if (!d1 || !d2) return false;
+
+      const a = new Date(d1);
+      const b = new Date(d2);
+
+      return (
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate()
+      );
+    }
+
+    if (date) {
+      const selected = new Date(date);
+
+      reportData = reportData.filter(r =>
+        isSameDay(r.borrowDate, selected) ||
+        isSameDay(r.returnDate, selected) ||
+        isSameDay(r.repairDate, selected) ||
+        isSameDay(r.repairCompletedDate, selected)
+      );
+    }
+
+    res.json(reportData);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

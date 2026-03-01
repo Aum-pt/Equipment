@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const dashboardController = require('../controllers/dashboardController');
+const auth = require('../middleware/authMiddleware');
 
-router.get('/', (req, res) => {
-  res.json({ message: 'Dashboard API working' });
-});
+router.get('/', auth, dashboardController.getDashboardStats);
 
 module.exports = router;

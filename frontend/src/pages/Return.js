@@ -42,7 +42,9 @@ export default function Return() {
           </div>
         )}
 
-        {borrows.map(borrow => (
+        {borrows
+          .filter(borrow => borrow.items.length > 0)  
+          .map(borrow => (
           <div key={borrow._id} className="borrow-card">
 
             <div className="borrow-card-header">
@@ -50,6 +52,12 @@ export default function Return() {
                 <div className="borrow-title">ใบยืมอุปกรณ์</div>
                 <div className="borrow-meta">
                   {borrow.department} • {borrow.purpose}
+                  <br />
+                  วันที่เบิก: {new Date(borrow.borrowDate).toLocaleDateString('th-TH', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
                 </div>
               </div>
             </div>

@@ -47,6 +47,13 @@
   color: #718096;
 }
 
+.repair-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px;
+}
+
+
 /* Card style เดียวกับ History */
 .repair-card {
   background: rgba(26, 32, 44, 0.9);
@@ -124,4 +131,117 @@
 
 .complete-btn:hover {
   transform: translateY(-2px);
+}
+
+.danger-btn {
+  background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.2s ease;
+}
+
+.danger-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 1024px) {
+  .table-section,
+  .report-table-section,
+  .history-content {
+    padding: 20px;
+  }
+
+  .dashboard-title {
+    font-size: 20px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 13px;
+  }
+
+  .borrow-card,
+  .repair-card,
+  .history-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 16px;
+  }
+
+  .dashboard-title {
+    font-size: 18px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 12px;
+  }
+
+  /* ปรับ action bar ให้เรียงลง */
+  .report-action-section,
+  .repair-actions,
+  .history-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  /* input เต็มจอ */
+  .report-search-container {
+    width: 100%;
+  }
+
+  .report-status-filter,
+  .report-date-filter,
+  .today-btn,
+  .clear-filter-btn,
+  .export-btn {
+    width: 100%;
+  }
+
+  /* card layout */
+  .borrow-card-header,
+  .repair-card-header,
+  .history-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* item ใน Return */
+  .return-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 16px;
+  }
+
+  .borrow-title,
+  .item-name {
+    font-size: 13px;
+  }
+
+  .item-info,
+  .borrow-meta {
+    font-size: 12px;
+  }
+
+  .status-badge,
+  .repair-status-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
 }

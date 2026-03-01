@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from 'react';
 import { getEquipment, getRepairs, getBorrowList } from '../services/api';
-import { LOW_STOCK_THRESHOLD } from '../config/constants';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts';
+import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
 /* ================= TOOLTIPS ================= */
@@ -19,18 +19,10 @@ const CustomTooltipRepair = ({ active, payload }) => {
         borderRadius: '12px',
         boxShadow: '0 6px 18px rgba(0,0,0,0.15)'
       }}>
-        <div style={{
-          color: '#1a202c',
-          fontWeight: 600,
-          marginBottom: 4
-        }}>
+        <div style={{ color: '#1a202c', fontWeight: 600, marginBottom: 4 }}>
           {name}
         </div>
-
-        <div style={{
-          color: '#e53e3e',
-          fontWeight: 700
-        }}>
+        <div style={{ color: '#e53e3e', fontWeight: 700 }}>
           qty : {qty}
         </div>
       </div>
@@ -50,18 +42,10 @@ const CustomTooltipUsed = ({ active, payload }) => {
         borderRadius: '12px',
         boxShadow: '0 6px 18px rgba(0,0,0,0.15)'
       }}>
-        <div style={{
-          color: '#1a202c',
-          fontWeight: 600,
-          marginBottom: 4
-        }}>
+        <div style={{ color: '#1a202c', fontWeight: 600, marginBottom: 4 }}>
           {name}
         </div>
-
-        <div style={{
-          color: '#3182ce',
-          fontWeight: 700
-        }}>
+        <div style={{ color: '#3182ce', fontWeight: 700 }}>
           qty : {qty}
         </div>
       </div>
@@ -77,6 +61,8 @@ export default function Dashboard() {
   const [repairs, setRepairs] = useState([]);
   const [borrows, setBorrows] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadData();
@@ -103,12 +89,41 @@ export default function Dashboard() {
 
   const stats = useMemo(() => ({
     total: equipment.length,
-    lowStock: equipment.filter(e => e.available > 0 && e.available <= LOW_STOCK_THRESHOLD).length,
-    outOfStock: equipment.filter(e => e.available === 0).length,
+
+    lowStock: equipment.filter(e => {
+      const available = e.available ?? e.total ?? 0;
+      const threshold = e.low_stock_threshold ?? 5;
+
+      return (
+        e.type === 'reusable' &&
+        available > 0 &&
+        available <= threshold
+      );
+    }).length,
+
+    outOfStock: equipment.filter(e => {
+      const available = e.available ?? e.total ?? 0;
+      return available === 0;
+    }).length,
+
   }), [equipment]);
 
-  const lowStockList = equipment.filter(e => e.available > 0 && e.available <= LOW_STOCK_THRESHOLD);
-  const outOfStockList = equipment.filter(e => e.available === 0);
+  // ✅ แก้ตรงนี้ (ใช้ threshold ของแต่ละ item)
+  const lowStockList = equipment.filter(e => {
+    const available = e.available ?? e.total ?? 0;
+    const threshold = e.low_stock_threshold ?? 5;
+
+    return (
+      e.type === 'reusable' &&
+      available > 0 &&
+      available <= threshold
+    );
+  });
+
+  const outOfStockList = equipment.filter(e => {
+    const available = e.available ?? e.total ?? 0;
+    return available === 0;
+  });
 
   const mostUsedData = useMemo(() => {
     const map = {};
@@ -144,14 +159,6 @@ export default function Dashboard() {
       .slice(0, 5);
   }, [repairs]);
 
-  const getCurrentDate = () => {
-    return new Date().toLocaleDateString('th-TH', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   if (loading) {
     return (
       <div className="loading">
@@ -168,27 +175,29 @@ export default function Dashboard() {
           <h1 className="dashboard-title">Dashboard</h1>
           <p className="dashboard-subtitle">ภาพรวมอุปกรณ์ทั้งหมด</p>
         </div>
-
-        <div className="history-date">
-          {getCurrentDate()}
-        </div>
       </div>
 
       {/* Stats */}
       <div className="stats-grid">
-        <div className="stat-card stat-card--total">
+        <div className="stat-card stat-card--total clickable"
+          onClick={() => navigate('/equipment')}
+        >
           <div className="stat-card__title">อุปกรณ์ทั้งหมด</div>
           <div className="stat-card__value">{stats.total}</div>
           <div className="stat-card__label">รายการทั้งหมด</div>
         </div>
 
-        <div className="stat-card stat-card--low">
+        <div className="stat-card stat-card--low clickable"
+          onClick={() => navigate('/equipment?filter=LOW_STOCK')}
+        >
           <div className="stat-card__title">ใกล้หมด</div>
           <div className="stat-card__value">{stats.lowStock}</div>
-          <div className="stat-card__label">เหลือน้อยกว่า {LOW_STOCK_THRESHOLD}</div>
+          <div className="stat-card__label">ต่ำกว่าค่าที่กำหนด</div>
         </div>
 
-        <div className="stat-card stat-card--out">
+        <div className="stat-card stat-card--out clickable"
+          onClick={() => navigate('/equipment?filter=OUT_OF_STOCK')}
+        >
           <div className="stat-card__title">หมดแล้ว</div>
           <div className="stat-card__value">{stats.outOfStock}</div>
           <div className="stat-card__label">ต้องรีบสั่งเพิ่ม</div>
@@ -202,7 +211,7 @@ export default function Dashboard() {
           <h3 className="list-card__title">อุปกรณ์ถูกใช้เยอะที่สุด</h3>
 
           <div className="chart-container">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart data={mostUsedData}>
                 <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
 
@@ -235,7 +244,7 @@ export default function Dashboard() {
           <h3 className="list-card__title">อุปกรณ์ที่ซ่อมบ่อยที่สุด</h3>
 
           <div className="chart-container">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height={260}>
               <BarChart data={repairData}>
                 <CartesianGrid stroke="#e2e8f0" strokeDasharray="3 3" />
 
@@ -279,12 +288,16 @@ export default function Dashboard() {
 
           <div className="list-card__items">
             {lowStockList.length > 0 ? (
-              lowStockList.map(e => (
-                <div key={e._id} className="list-item list-item--low">
-                  <span className="list-item__name">{e.name}</span>
-                  <span className="list-item__value">เหลือ {e.available}</span>
-                </div>
-              ))
+              lowStockList.map(e => {
+                const available = e.available ?? e.total ?? 0;
+                return (
+                  <div key={e._id} className="list-item list-item--low">
+                    <span className="list-item__name">{e.name}</span>
+                    <span className="list-item__value">เหลือ {available}</span>
+                  </div>
+                );
+              })
+
             ) : (
               <div className="empty-state">ไม่มีอุปกรณ์ใกล้หมด</div>
             )}

@@ -32,8 +32,12 @@ const repairSchema = new mongoose.Schema({
     type: String,
     enum: ['กำลังซ่อม', 'ซ่อมเสร็จ'],
     default: 'กำลังซ่อม'
-  }
+  },
 
+  completedDate: {
+  type: Date,
+  default: null
+}
 
 });
 repairSchema.index({ status: 1 });

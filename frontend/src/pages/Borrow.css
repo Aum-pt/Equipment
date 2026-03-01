@@ -311,7 +311,8 @@
 
 /* Table Section */
 .table-section {
-  padding: 0 30px;
+  padding: 0 30px 30px 30px;  /* เอา top padding ออก */
+  margin-top: -10px;          /* ดึงขึ้นเล็กน้อย */
 }
 
 .section-header {
@@ -329,8 +330,6 @@
   align-items: center;
   gap: 10px;
 }
-
-
 
 .section-actions {
   display: flex;
@@ -411,7 +410,8 @@
 .equipment-table th {
   background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
   padding: 16px 12px;
-  text-align: left;
+  text-align: center;          
+  vertical-align: middle;  
   font-weight: 600;
   font-size: 14px;
   color: #d69e2e;
@@ -438,6 +438,7 @@
   vertical-align: middle;
   color: #e2e8f0;
   font-size: 14px;
+  text-align: center;   
 }
 
 .equipment-table tbody tr {
@@ -580,14 +581,24 @@
 /* Quantity Controls */
 .quantity-cell {
   min-width: 200px;
+  text-align: center;
+  vertical-align: middle;   
 }
 
+
 .quantity-control {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid #4a5568;
+  border-radius: 12px;
+  padding: 6px;
+  gap: 6px;             
+  justify-content: center;
 }
+
+
 
 .quantity-input-group {
   display: flex;
@@ -598,27 +609,27 @@
 }
 
 .quantity-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  border: 1px solid #4a5568;
-  background: rgba(45, 55, 72, 0.8);
-  color: #e2e8f0;
-  font-size: 16px;
-  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #2d3748, #4a5568);
+  color: #d69e2e;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 .quantity-btn:hover:not(:disabled) {
-  border-color: #d69e2e;
-  background: rgba(214, 158, 46, 0.1);
-  transform: scale(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(214, 158, 46, 0.35);
 }
+
+.quantity-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
 
 .quantity-btn:disabled {
   opacity: 0.3;
@@ -627,24 +638,23 @@
 }
 
 .quantity-input {
-  width: 80px;
+  width: 55px;              /* ⭐ ไม่กว้างเกิน */
+  height: 28px;
   text-align: center;
-  padding: 8px;
-  background: rgba(26, 32, 44, 0.9);
-  border: 2px solid #4a5568;
   border-radius: 6px;
-  color: #fff;
+  border: 1px solid #4a5568;
+  background: rgba(26, 32, 44, 1);
+  color: white;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.3s;
 }
 
 .quantity-input:focus {
   outline: none;
   border-color: #d69e2e;
-  box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
-  background: rgba(26, 32, 44, 1);
+  box-shadow: 0 0 0 2px rgba(214, 158, 46, 0.25);
 }
+
 
 .quantity-input::placeholder {
   color: #718096;
@@ -653,9 +663,20 @@
 .quantity-max {
   font-size: 12px;
   color: #718096;
-  margin-top: 4px;
-  text-align: center;
+  line-height: 1;
 }
+
+
+.quantity-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;  
+  gap: 4px;
+  transform: translateY(4px); 
+}
+
+
 
 /* Loading State */
 .loading-container {
@@ -782,5 +803,107 @@
     min-width: 50px;
     font-size: 12px;
     padding: 6px 10px;
+  }
+}
+
+/* ===============================
+   GLOBAL (Mobile First)
+================================ */
+.borrow-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(26, 32, 44, 0.95);
+  border-bottom: 2px solid #d69e2e;
+}
+
+.dashboard-title {
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff 0%, #d69e2e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===============================
+   ACTION
+================================ */
+.action-section {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-container {
+  width: 100%;
+}
+
+.selection-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.table-section {
+  padding: 0 16px;
+}
+
+.equipment-table {
+  min-width: 900px;
+}
+
+/* ===============================
+   TABLET
+================================ */
+@media (min-width: 768px) {
+  .dashboard-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .action-section {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .selection-info {
+    flex-direction: row;
+  }
+
+  .table-section {
+    padding: 0 24px;
+  }
+}
+
+/* ===============================
+   DESKTOP
+================================ */
+@media (min-width: 1024px) {
+  .dashboard-title {
+    font-size: 24px;
+  }
+
+  .action-section {
+    padding: 24px;
+  }
+
+  .table-section {
+    padding: 0 30px;
   }
 }
