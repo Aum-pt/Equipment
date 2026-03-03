@@ -38,7 +38,7 @@ mongoose.connect(process.env.MONGO_URI)
 // ======================
 // Routes
 // ======================
-app.use(express.json());    // 🔥 ต้องมี
+app.use(express.json());   
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/borrow', borrowRoutes);
 app.use('/api/repair', repairRoutes);

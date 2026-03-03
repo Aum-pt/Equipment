@@ -6,7 +6,8 @@ const equipmentSchema = new mongoose.Schema(
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    index: true
   },
 
   type: {
@@ -27,16 +28,18 @@ const equipmentSchema = new mongoose.Schema(
     min: 0
   },
 
-  available: {
-    type: Number,
-    required: true,
-    min: 0,
-    validate: {
-      validator: function (v) {
-        return v <= this.total;
-      },
-      message: 'available มากกว่า total ไม่ได้'
-    }
+ available: {
+  type: Number,
+  required: true,
+  min: 0,
+  index: true,
+  validate: {
+    validator: function (v) {
+      return v <= this.total;
+    },
+    message: 'available มากกว่า total ไม่ได้'
+  }
+
   },
 
     low_stock_threshold: {
@@ -80,5 +83,6 @@ equipmentSchema.pre('save', async function () {
 
 equipmentSchema.index({ type: 1 });
 equipmentSchema.index({ name: 1 });
-
+equipmentSchema.index({ available: 1 });
+equipmentSchema.index({ isDeleted: 1 });
 module.exports = mongoose.model('Equipment', equipmentSchema);

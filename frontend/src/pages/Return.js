@@ -47,36 +47,42 @@ export default function Return() {
           .map(borrow => (
           <div key={borrow._id} className="borrow-card">
 
-            <div className="borrow-card-header">
+          {/* HEADER */}
+          <div className="doc-header">
+            <div className="doc-title">ใบยืมอุปกรณ์</div>
+
+            <div className="doc-info-grid">
+              <div><span>แผนก:</span> {borrow.department}</div>
+              <div><span>วัตถุประสงค์:</span> {borrow.purpose}</div>
+
               <div>
-                <div className="borrow-title">ใบยืมอุปกรณ์</div>
-                <div className="borrow-meta">
-                  {borrow.department} • {borrow.purpose}
-                  <br />
-                  วันที่เบิก: {new Date(borrow.borrowDate).toLocaleDateString('th-TH', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </div>
+                <span>วันที่เบิก:</span>{" "}
+                {new Date(borrow.borrowDate).toLocaleDateString("th-TH", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
               </div>
-            </div>
 
-            <div className="borrow-items">
-              {borrow.items.map(item => (
-                <ReturnForm
-                  key={item._id}
-                  borrow={borrow}
-                  item={item}
-                  onSuccess={loadBorrows}
-                />
-              ))}
+              <div><span>จำนวนรายการ:</span> {borrow.items.length} รายการ</div>
             </div>
-
           </div>
+
+          {/* ITEMS */}
+          <div className="borrow-items">
+            {borrow.items.map(item => (
+              <ReturnForm
+                key={item._id}
+                borrow={borrow}
+                item={item}
+                onSuccess={loadBorrows}
+              />
+            ))}
+          </div>
+
+        </div>
         ))}
           </div>
       </div>
-
   );
 }

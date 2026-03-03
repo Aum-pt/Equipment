@@ -1,44 +1,109 @@
-/* ===== INLINE RETURN LAYOUT ===== */
-
+/* ===== MAIN CARD ===== */
 .return-item-card {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 24px;
+  grid-template-columns: 2fr 200px 200px auto;
+  gap: 20px;
   background: rgba(30, 41, 59, 0.9);
   border-radius: 14px;
   padding: 18px 22px;
   border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* LEFT SIDE */
+/* =======================
+   LEFT
+======================= */
 .return-item-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-
-.return-inline-form {
-  display: flex;
-  align-items: flex-end;   /* 👈 สำคัญมาก */
-  gap: 28px;
+.item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #edf2f7;
 }
 
+.item-meta {
+  font-size: 13px;
+  color: #a0aec0;
+  margin-top: 4px;
+}
+
+.already-returned {
+  margin-left: 6px;
+  color: #68d391;
+  font-weight: 500;
+}
+
+/* =======================
+   RIGHT FORM
+======================= */
+.return-inline-form {
+  display: grid;
+  grid-template-columns: 1.4fr 130px 130px auto; /* 🔥 เท่ากันเป๊ะ */
+  gap: 12px;
+  align-items: end;
+}
+
+/* =======================
+   NOTE
+======================= */
+.modern-note-group {
+  display: flex;
+  grid-column: span 2;
+  flex-direction: column;
+}
+
+.modern-note-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a0aec0;
+  margin-bottom: 6px;
+  height: 16px;
+}
+
+.modern-note-group textarea {
+  height: 40px;
+ padding: 6px 12px; 
+  border-radius: 8px;
+  border: 1px solid #4a5568;
+  font-size: 12px;
+  background: rgba(26, 32, 44, 0.95);
+  color: #e2e8f0;
+  resize: none;
+  display: flex;
+  align-items: center;
+}
+
+/* =======================
+   QTY
+======================= */
 .modern-qty-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
 .modern-qty-group label {
   font-size: 12px;
   font-weight: 600;
   color: #a0aec0;
+  margin-bottom: 6px;
+  height: 16px;
 }
 
+/* 🔥 สำคัญ: ทำให้ 2 ช่องเท่ากันจริง */
+.normal-group .modern-qty-control,
+.damaged-group .modern-qty-control {
+  width: 130px;
+}
+
+/* CONTROL */
 .modern-qty-control {
   display: flex;
   align-items: center;
+  justify-content: space-between; /* 🔥 ทำให้ balance */
+  height: 40px;
   background: rgba(26, 32, 44, 0.9);
   border: 1px solid #4a5568;
   border-radius: 8px;
@@ -47,7 +112,7 @@
 
 .modern-qty-control button {
   width: 36px;
-  height: 36px;
+  height: 100%;
   border: none;
   background: transparent;
   color: #e2e8f0;
@@ -55,14 +120,11 @@
   cursor: pointer;
 }
 
-.modern-qty-control button:hover {
-  background: rgba(214, 158, 46, 0.2);
-  color: #d69e2e;
-}
-
+/* 🔥 ตัวการหลักที่ทำให้ไม่เท่ากัน → แก้แล้ว */
 .modern-qty-control input {
-  width: 60px;
-  height: 36px;
+  flex: 1;
+  width: 40px; /* ลดจาก 60px */
+  height: 100%;
   border: none;
   text-align: center;
   background: transparent;
@@ -71,91 +133,38 @@
   outline: none;
 }
 
+/* =======================
+   BUTTON
+======================= */
 .modern-return-btn {
-  height: 38px;             /* เท่ากับ input */
-  box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(214, 158, 46, 0.25);
-  padding: 0 18px;
+  height: 40px;
+  padding: 0 16px;
   border-radius: 8px;
-  border: 1px solid #d69e2e;  /* ใส่ border ให้ดูบาลานซ์กับ input */
+  border: 1px solid #d69e2e;
   font-weight: 600;
   cursor: pointer;
   background: linear-gradient(135deg, #d69e2e, #ecc94b);
   color: #1a202c;
-  display: flex;             /* จัดข้อความให้อยู่กลาง */
+
+  display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
-  margin-bottom: 1px;   /* กัน margin ดันขึ้น */
-  align-self: flex-end;
 }
 
-.modern-return-btn:hover {
-  transform: translateY(-1px);
-}
+/* =======================
+   MOBILE
+======================= */
+@media (max-width: 768px) {
+  .return-item-card {
+    grid-template-columns: 1fr;
+  }
 
-/* ========================================
-   📝 FORMAL NOTE GROUP (Professional)
-======================================== */
+  .return-inline-form {
+    grid-template-columns: 1fr;
+  }
 
-.modern-note-group {
-  margin-top: 14px;
-  width: 100%;
-  max-width: 320px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* label row */
-.note-label-row {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.note-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #e2e8f0;
-  letter-spacing: 0.3px;
-}
-
-.note-optional {
-  font-size: 11px;
-  color: #a0aec0;
-}
-
-/* textarea */
-.modern-note-group textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: 8px; /* ลดความโค้งให้ดูทางการ */
-  border: 1px solid #4a5568;
-
-  font-size: 13px;
-  resize: none;
-
-  background: rgba(26, 32, 44, 0.9);
-  color: #e2e8f0;
-
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* hover */
-.modern-note-group textarea:hover {
-  border-color: #d69e2e;
-}
-
-/* focus */
-.modern-note-group textarea:focus {
-  outline: none;
-  border-color: #d69e2e;
-  box-shadow: 0 0 0 2px rgba(214, 158, 46, 0.15);
-}
-
-/* placeholder */
-.modern-note-group textarea::placeholder {
-  color: #718096;
-  font-size: 12px;
+  .normal-group .modern-qty-control,
+  .damaged-group .modern-qty-control {
+    width: 100%;
+  }
 }

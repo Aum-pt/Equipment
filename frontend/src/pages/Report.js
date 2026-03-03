@@ -40,15 +40,15 @@ export default function Report() {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Report');
     worksheet.columns = [
-      { header: 'อุปกรณ์', key: 'equipmentName', width: 28 },
-      { header: 'จำนวน', key: 'quantity', width: 16},
-      { header: 'วันที่เบิก', key: 'borrowDate', width: 16 },
-      { header: 'วันที่คืน', key: 'returnDate', width: 16 },
-      { header: 'วันที่ซ่อม', key: 'repairDate', width: 16 },
-      { header: 'ซ่อมเสร็จ', key: 'repairCompletedDate', width: 16 },
-      { header: 'สถานะ', key: 'status', width: 16 },
-      { header: 'หมายเหตุเบิก', key: 'borrowNote', width: 30 },   
-      { header: 'หมายเหตุคืน', key: 'returnNote', width: 30 },   
+      { key: 'equipmentName', width: 28 },
+      { key: 'quantity', width: 16 },
+      { key: 'borrowDate', width: 16 },
+      { key: 'returnDate', width: 16 },
+      { key: 'repairDate', width: 16 },
+      { key: 'repairCompletedDate', width: 16 },
+      { key: 'status', width: 16 },
+      { key: 'borrowNote', width: 30 },
+      { key: 'returnNote', width: 30 },
     ];
 
     worksheet.getColumn(2).alignment = { horizontal: 'center' }; // จำนวน
@@ -174,7 +174,7 @@ if (reports.length > 0) {
   worksheet.getRow(lastDataRowNumber).eachCell((cell) => {
     cell.border = {
       ...cell.border,
-      bottom: { style: 'medium' }, // เส้นหนาแค่ตรงนี้พอ
+      bottom: { style: 'medium' }, 
     };
   });
 }

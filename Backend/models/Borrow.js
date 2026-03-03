@@ -59,13 +59,23 @@ const borrowSchema = new mongoose.Schema({
   },
   status: {
     type: String,
+    index: true,
     enum: ['ยืมอยู่', 'คืนแล้ว', 'เสร็จสิ้น'],
     default: 'ยืมอยู่'
   },
   items: {
     type: [borrowItemSchema],
     required: true
-  }
+  },
+  isDeleted: {
+  type: Boolean,
+  default: false,
+  index: true
+}
 }, { timestamps: true });
 
+
+borrowSchema.index({ status: 1 });
+borrowSchema.index({ department: 1 });
+borrowSchema.index({ createdAt: -1 });
 module.exports = mongoose.model('Borrow', borrowSchema);

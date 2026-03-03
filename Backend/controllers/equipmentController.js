@@ -181,6 +181,50 @@ exports.updateEquipment = async (req, res) => {
   }
 };
 
+/* ================= INCREASE STOCK ================= */
+
+exports.increaseStock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { qty } = req.body;
+
+    const parsedQty = Number(qty);
+
+    if (!Number.isFinite(parsedQty) || parsedQty <= 0) {
+      return res.status(400).json({ message: "จำนวนไม่ถูกต้อง" });
+    }
+
+    const updated = await Equipment.findByIdAndUpdate(
+      id,
+      {
+        $inc: {
+          total: parsedQty,
+          available: parsedQty
+        }
+      },
+      { new: true }
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "ไม่พบอุปกรณ์" });
+    }
+
+    await ActivityLog.create({
+      action: 'INCREASE_STOCK',
+      referenceId: updated._id,
+      equipmentName: updated.name,
+      equipmentCode: updated.code,
+      description: `เพิ่มสต๊อก +${parsedQty}`
+    });
+
+    res.json(updated);
+
+  } catch (err) {
+    console.error('INCREASE STOCK ERROR:', err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
 /* ================= DELETE ================= */
 
 exports.deleteEquipment = async (req, res) => {

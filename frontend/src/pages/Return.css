@@ -1,160 +1,70 @@
 .table-section {
-  padding: 30px;
+  margin-top: 32px;
 }
 
 /* =======================
-   BORROW CARD
+   BORROW CARD (NEW)
 ======================= */
 .borrow-card {
-  background: rgba(26, 32, 44, 0.95);
-  border-radius: 16px;
+  background: linear-gradient(145deg, #1a202c, #2d3748);
+  border-radius: 18px;
   border: 1px solid #4a5568;
-  margin-bottom: 24px;
-  padding: 22px;
-  transition: 0.2s ease;
+  margin-bottom: 28px;
+  padding: 24px;
+  transition: 0.25s ease;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
 .borrow-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: #d69e2e;
 }
 
 /* =======================
-   HEADER
+   DOCUMENT HEADER
 ======================= */
-.borrow-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 18px;
+.doc-header {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
 }
 
-.borrow-title-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.borrow-title {
-  font-size: 16px;
+.doc-title {
+  font-size: 20px;
   font-weight: 700;
-  color: #d69e2e;
+  color: #f6e05e;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
 }
 
-.borrow-meta {
+/* GRID INFO */
+.doc-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 24px;
   font-size: 13px;
+  color: #e2e8f0;
+}
+
+.doc-info-grid span {
   color: #a0aec0;
-  margin-top: 6px;
+  margin-right: 6px;
 }
 
 /* =======================
-   TYPE BADGE
-======================= */
-.type-badge {
-  font-size: 11px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-}
-
-.type-badge.consumable {
-  background: rgba(229, 62, 62, 0.2);
-  color: #fc8181;
-  border: 1px solid #e53e3e;
-}
-
-.type-badge.reusable {
-  background: rgba(56, 161, 105, 0.2);
-  color: #68d391;
-  border: 1px solid #38a169;
-}
-
-/* =======================
-   DELETE BUTTON
-======================= */
-.delete-btn {
-  background: #e53e3e;
-  border: none;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 8px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.delete-btn:hover {
-  background: #c53030;
-  transform: translateY(-2px);
-}
-
-/* =======================
-   ITEMS
+   ITEMS SECTION
 ======================= */
 .borrow-items {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.return-item-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(45, 55, 72, 0.6);
-  border-radius: 10px;
-  padding: 14px 16px;
-}
-
-.item-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: #edf2f7;
-}
-
-.item-info {
-  font-size: 13px;
-  color: #a0aec0;
+  gap: 14px;
 }
 
 /* =======================
-   GLOBAL DELETE BUTTON
+   DIVIDER LINE (OPTIONAL)
 ======================= */
-.section-top {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-}
-
-.delete-btn-global {
-  background: #e53e3e;
-  border: none;
-  color: white;
-
-  padding: 12px 32px;
-  border-radius: 8px;
-
-  font-size: 16px;
-  font-weight: 600;
-
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.delete-btn-global:hover {
-  background: #c53030;
-}
-
-@media (max-width: 768px) {
-  .borrow-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .return-item-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
+.borrow-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 16px 0;
 }

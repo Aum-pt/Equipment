@@ -8,5 +8,6 @@ router.post('/', auth, equipmentController.addEquipment);
 router.get('/', auth, equipmentController.getAllEquipment);
 router.put('/:id', auth, equipmentController.updateEquipment);
 router.delete('/:id', auth, equipmentController.deleteEquipment);
+router.put('/:id/increase', auth, equipmentController.increaseStock);
 
 module.exports = router;
