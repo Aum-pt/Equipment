@@ -75,7 +75,6 @@ const borrowSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-borrowSchema.index({ status: 1 });
 borrowSchema.index({ department: 1 });
 borrowSchema.index({ createdAt: -1 });
 module.exports = mongoose.model('Borrow', borrowSchema);

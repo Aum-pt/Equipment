@@ -83,6 +83,5 @@ equipmentSchema.pre('save', async function () {
 
 equipmentSchema.index({ type: 1 });
 equipmentSchema.index({ name: 1 });
-equipmentSchema.index({ available: 1 });
 equipmentSchema.index({ isDeleted: 1 });
 module.exports = mongoose.model('Equipment', equipmentSchema);
