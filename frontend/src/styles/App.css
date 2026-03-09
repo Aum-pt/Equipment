@@ -34,7 +34,7 @@ body {
   margin-left: auto;     /* ดันไปขวาสุด */
   background: #ff4d4f;
   border: none;
-  color: white;
+  color: rgb(61, 61, 61);
   padding: 6px 12px;
   border-radius: 6px;
   cursor: pointer;

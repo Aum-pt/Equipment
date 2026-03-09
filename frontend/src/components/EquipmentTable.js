@@ -112,7 +112,7 @@ function EquipmentTable({ searchTerm, refreshTrigger }) {
   const available = e.available ?? e.total ?? 0;
   const threshold = e.low_stock_threshold ?? 5;
 
-  // ✅ filter จาก dashboard
+  // filter จาก dashboard
   if (searchTerm === 'LOW_STOCK') {
     return e.type === 'reusable' && available > 0 && available <= threshold;
   }
@@ -121,7 +121,7 @@ function EquipmentTable({ searchTerm, refreshTrigger }) {
     return available === 0;
   }
 
-  // ✅ search ปกติ
+  // search ปกติ
   return (
     (e.name || '').toLowerCase().includes(safeSearch) ||
     (e.code || '').toLowerCase().includes(safeSearch)

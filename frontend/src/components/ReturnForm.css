@@ -1,170 +1,224 @@
-/* ===== MAIN CARD ===== */
-.return-item-card {
-  display: grid;
-  grid-template-columns: 2fr 200px 200px auto;
-  gap: 20px;
-  background: rgba(30, 41, 59, 0.9);
-  border-radius: 14px;
-  padding: 18px 22px;
-  border: 1px solid rgba(255,255,255,0.05);
+/* =========================
+   RETURN ITEM CARD
+========================= */
+
+.return-item-card{
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto auto;
+  gap:4px 16px;
+
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  padding:20px;
+  transition:all 0.25s ease;
 }
 
-/* =======================
-   LEFT
-======================= */
-.return-item-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.return-item-card:hover{
+  border-color:#f4b400;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  transform:translateY(-2px);
 }
 
-.item-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: #edf2f7;
+/* =========================
+   ITEM INFO (ซ้ายบน)
+========================= */
+
+.item-name{
+  grid-column:1;
+  grid-row:1;
+  font-size:16px;
+  font-weight:700;
+  color:#2d3748;
 }
 
-.item-meta {
-  font-size: 13px;
-  color: #a0aec0;
-  margin-top: 4px;
+.item-meta{
+  grid-column:1;
+  grid-row:2;
+  font-size:13px;
+  color:#718096;
 }
 
-.already-returned {
-  margin-left: 6px;
-  color: #68d391;
-  font-weight: 500;
+.already-returned{
+  margin-left:6px;
+  color:#2f855a;
+  font-weight:600;
 }
 
-/* =======================
-   RIGHT FORM
-======================= */
-.return-inline-form {
-  display: grid;
-  grid-template-columns: 1.4fr 130px 130px auto; /* 🔥 เท่ากันเป๊ะ */
-  gap: 12px;
-  align-items: end;
+/* =========================
+   NOTE (ซ้ายล่าง)
+========================= */
+
+.modern-note-group{
+  grid-column:1;
+  grid-row:3;
+  display:flex;
+  flex-direction:column;
+  margin-top:8px;
 }
 
-/* =======================
-   NOTE
-======================= */
-.modern-note-group {
-  display: flex;
-  grid-column: span 2;
-  flex-direction: column;
+.modern-note-group label{
+  font-size:12px;
+  font-weight:600;
+  color:#718096;
+  margin-bottom:6px;
 }
 
-.modern-note-group label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #a0aec0;
-  margin-bottom: 6px;
-  height: 16px;
+.modern-note-group textarea{
+  width:300%;
+  height:45px;
+  border-radius:8px;
+  border:1px solid #e2e8f0;
+  padding:10px 12px;
+  font-size:13px;
+  background:#fafafa;
+  resize:none;
+  transition:all 0.2s;
 }
 
-.modern-note-group textarea {
-  height: 40px;
- padding: 6px 12px; 
-  border-radius: 8px;
-  border: 1px solid #4a5568;
-  font-size: 12px;
-  background: rgba(26, 32, 44, 0.95);
-  color: #e2e8f0;
-  resize: none;
-  display: flex;
-  align-items: center;
+.modern-note-group textarea:focus{
+  outline:none;
+  border-color:#f4b400;
+  background:white;
+  box-shadow:0 0 0 3px rgba(244,180,0,0.15);
 }
 
-/* =======================
-   QTY
-======================= */
-.modern-qty-group {
-  display: flex;
-  flex-direction: column;
+/* =========================
+   FORM (ขวา ทุก row)
+========================= */
+
+.return-inline-form{
+  grid-column:2;
+  grid-row:1 / 4;
+  display:flex;
+  align-items:flex-end;
+  gap:12px;
+  margin-top: 40px;  
+  align-self:end;
 }
 
-.modern-qty-group label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #a0aec0;
-  margin-bottom: 6px;
-  height: 16px;
+/* =========================
+   QTY GROUP
+========================= */
+
+.modern-qty-group{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-/* 🔥 สำคัญ: ทำให้ 2 ช่องเท่ากันจริง */
-.normal-group .modern-qty-control,
-.damaged-group .modern-qty-control {
-  width: 130px;
+.modern-qty-group label{
+  font-size:12px;
+  font-weight:600;
+  color:#718096;
+  margin-bottom:6px;
+  white-space:nowrap;
 }
 
-/* CONTROL */
-.modern-qty-control {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* 🔥 ทำให้ balance */
-  height: 40px;
-  background: rgba(26, 32, 44, 0.9);
-  border: 1px solid #4a5568;
-  border-radius: 8px;
-  overflow: hidden;
+/* =========================
+   QTY CONTROL
+========================= */
+
+.modern-qty-control{
+  display:flex;
+  align-items:center;
+  height:42px;
+  width:fit-content;
+  border:1px solid #e2e8f0;
+  border-radius:8px;
+  background:white;
+  overflow:hidden;
+  transition:all 0.2s;
 }
 
-.modern-qty-control button {
-  width: 36px;
-  height: 100%;
-  border: none;
-  background: transparent;
-  color: #e2e8f0;
-  font-size: 18px;
-  cursor: pointer;
+.modern-qty-control:focus-within{
+  border-color:#f4b400;
+  box-shadow:0 0 0 3px rgba(244,180,0,0.15);
 }
 
-/* 🔥 ตัวการหลักที่ทำให้ไม่เท่ากัน → แก้แล้ว */
-.modern-qty-control input {
-  flex: 1;
-  width: 40px; /* ลดจาก 60px */
-  height: 100%;
-  border: none;
-  text-align: center;
-  background: transparent;
-  color: white;
-  font-weight: 600;
-  outline: none;
+.modern-qty-control button{
+  width:36px;
+  height:100%;
+  border:none;
+  background:#f8f9fa;
+  font-size:18px;
+  font-weight:700;
+  color:#4a5568;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-/* =======================
-   BUTTON
-======================= */
-.modern-return-btn {
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 8px;
-  border: 1px solid #d69e2e;
-  font-weight: 600;
-  cursor: pointer;
-  background: linear-gradient(135deg, #d69e2e, #ecc94b);
-  color: #1a202c;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.modern-qty-control button:hover{
+  background:#fff4cc;
+  color:#b7791f;
 }
 
-/* =======================
+.modern-qty-control input{
+  width:48px;
+  border:none;
+  text-align:center;
+  font-size:15px;
+  font-weight:700;
+  background:white;
+  outline:none;
+}
+
+/* =========================
+   RETURN BUTTON
+========================= */
+
+.modern-return-btn{
+  height:42px;
+  padding:0 20px;
+  border-radius:8px;
+  border:none;
+  background:#f4b400;
+  color:white;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.3px;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+
+.modern-return-btn:hover{
+  background:#e2a100;
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.15);
+}
+
+.modern-return-btn:disabled{
+  background:#cbd5e0;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+/* =========================
    MOBILE
-======================= */
-@media (max-width: 768px) {
-  .return-item-card {
-    grid-template-columns: 1fr;
-  }
+========================= */
 
-  .return-inline-form {
-    grid-template-columns: 1fr;
-  }
+@media (max-width:768px){
 
-  .normal-group .modern-qty-control,
-  .damaged-group .modern-qty-control {
-    width: 100%;
-  }
+.return-item-card{
+  grid-template-columns:1fr;
+  grid-template-rows:auto;
+}
+
+.item-name{ grid-column:1; grid-row:1; }
+.item-meta{ grid-column:1; grid-row:2; }
+.modern-note-group{ grid-column:1; grid-row:3; }
+
+.return-inline-form{
+  grid-column:1;
+  grid-row:4;
+  flex-wrap:wrap;
+}
+
+.modern-return-btn{
+  width:100%;
+}
+
 }

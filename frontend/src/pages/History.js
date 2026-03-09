@@ -37,15 +37,14 @@ export default function History() {
 
   return (
     <div className="history-dashboard">
-
-      <div className="dashboard-header">
-          <div>
-            <h1 className="dashboard-title">ประวัติการใช้งานระบบ</h1>
-            <p className="dashboard-subtitle">รายการกิจกรรมทั้งหมดในระบบ</p>
-          </div>
+      <div className="history-header">
+        <div className="history-header-text">
+          <h1 className="history-main-title">ประวัติการใช้งานระบบ</h1>
+          <p className="history-subtitle">รายการกิจกรรมทั้งหมดในระบบ</p>
         </div>
+      </div>
 
-        {/* ✅ Action Bar เหมือนหน้า Repair / Equipment */}
+        {/* Action Bar เหมือนหน้า Repair / Equipment */}
         <div className="history-actions">
           <button className="danger-btn" onClick={handleDeleteLogs}>
             ลบประวัติทั้งหมด

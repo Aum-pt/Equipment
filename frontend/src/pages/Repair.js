@@ -47,10 +47,10 @@ export default function Repair() {
     <div className="repair-dashboard">
 
       {/* ===== Header ===== */}
-      <div className="dashboard-header">
+      <div className="repair-header">
         <div>
-          <h1 className="dashboard-title">ระบบซ่อมอุปกรณ์</h1>
-          <p className="dashboard-subtitle">รายการอุปกรณ์ที่แจ้งชำรุด</p>
+          <h1 className="repair-title">ระบบซ่อมอุปกรณ์</h1>
+          <p className="repair-subtitle">รายการอุปกรณ์ที่แจ้งชำรุด</p>
         </div>
       </div>
 

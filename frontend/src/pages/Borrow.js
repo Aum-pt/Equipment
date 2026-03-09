@@ -122,8 +122,8 @@ const handleQuantityChange = (equipmentId, quantity) => {
     await borrowEquipment(borrowData);
 
     alert(`เบิกอุปกรณ์เรียบร้อย!
-จำนวนรายการ: ${borrowDetails.length}
-จำนวนชิ้น: ${borrowDetails.reduce((s, i) => s + i.quantity, 0)}`);
+      จำนวนรายการ: ${borrowDetails.length}
+      จำนวนชิ้น: ${borrowDetails.reduce((s, i) => s + i.quantity, 0)}`);
 
     setSelectedEquipments([]);
     setQuantities({});
@@ -177,11 +177,11 @@ const handleQuantityChange = (equipmentId, quantity) => {
   return (
     <div className="borrow-dashboard">
 
-      <div className="dashboard-header">
+      <div className="borrow-header">
         <div className="header-left">
           <div>
-            <h1 className="dashboard-title">ระบบเบิกอุปกรณ์</h1>
-            <p className="dashboard-subtitle">
+            <h1 className="borrow-title">ระบบเบิกอุปกรณ์</h1>
+            <p className="borrow-subtitle">
               เลือกและเบิกอุปกรณ์จากคลังสินค้า
             </p>
           </div>

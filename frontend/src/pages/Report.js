@@ -203,10 +203,10 @@ if (reports.length > 0) {
     <div className="report-dashboard">
 
       {/* HEADER */}
-      <div className="dashboard-header">
+      <div className="report-header">
         <div>
-          <h1 className="dashboard-title">รายงานข้อมูล</h1>
-          <p className="dashboard-subtitle">
+          <h1 className="report-title">รายงานข้อมูล</h1>
+          <p className="report-subtitle">
             สรุปข้อมูลการเบิก คืน และซ่อมอุปกรณ์ทั้งหมด
           </p>
         </div>

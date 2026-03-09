@@ -1,50 +1,65 @@
 body {
   margin: 0;
   padding: 0;
-  background: #1a202c;
+  background: #f7fafc;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
-  color: #e2e8f0;
+  background: #f7fafc;
+  color: #1a202c;
 }
 
 /* ================= HEADER ================= */
-
-.dashboard-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 26px;
-  background: rgba(26, 32, 44, 0.95);
-  border-bottom: 2px solid #d69e2e;
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+.dashboard-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+  background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
+  border-bottom:3px solid #f4b400;
+  color:white;
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
 }
 
-.dashboard-title {
-  font-size: 22px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff 0%, #d69e2e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0;
+/* กล่องข้อความ */
+.dashboard-header-text h1{
+  font-size:28px;
+  font-weight:700;
+  margin:0;
 }
 
-.dashboard-subtitle {
-  font-size: 13px;
-  color: #a0aec0;
-  margin-top: 2px;
+.dashboard-header-text p{
+  margin-top:6px;
+  font-size:14px;
+  color:#e2e8f0;
+}
+
+/* ปุ่ม */
+.dashboard-header-actions{
+  display:flex;
+  gap:12px;
+}
+
+.dashboard-btn{
+  background:#f4b400;
+  border:none;
+  padding:10px 16px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.dashboard-btn:hover{
+  background:#e0a800;
+  transform:translateY(-2px);
 }
 
 .history-date {
   font-size: 13px;
-  color: #a0aec0;
+  color: #64748b;
 }
 
 /* ================= TOP STATS ================= */
@@ -52,19 +67,23 @@ body {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+
   gap: 18px;
 
-  padding: 22px 26px 10px 26px;   /* ⭐ เว้นจาก header */
+  padding: 22px 26px 10px 26px;
 }
 
-/* การ์ดเตี้ย + สมส่วน */
 .stat-card {
   background: white;
+
   border-radius: 14px;
+
   padding: 16px 18px;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
   position: relative;
+
   transition: 0.2s;
 }
 
@@ -75,50 +94,56 @@ body {
 .stat-card::before {
   content: '';
   position: absolute;
+
   top: 0;
   left: 0;
   right: 0;
+
   height: 4px;
 }
 
 .stat-card--total::before {
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg,#667eea,#764ba2);
 }
 
 .stat-card--low::before {
-  background: linear-gradient(90deg, #f6b23e, #f9a826);
+  background: linear-gradient(90deg,#f6b23e,#f9a826);
 }
 
 .stat-card--out::before {
-  background: linear-gradient(90deg, #ef4f4f, #c74242);
+  background: linear-gradient(90deg,#ef4f4f,#c74242);
 }
 
 .stat-card__title {
   font-size: 14px;
   font-weight: 600;
-  color: #1a202c;   
+  color: #1a202c;
 }
 
 .stat-card__header {
   display: flex;
   justify-content: space-between;
+
   font-size: 13px;
-  color: #2d3748;         
+
+  color: #475569;
+
   font-weight: 600;
 }
 
 .stat-card__value {
   font-size: 28px;
   font-weight: 800;
+
   color: #1a202c;
+
   margin-top: 6px;
   margin-bottom: 2px;
 }
 
-
 .stat-card__label {
   font-size: 13px;
-  color: #4a5568;          
+  color: #64748b;
   font-weight: 500;
 }
 
@@ -129,14 +154,16 @@ body {
 
 .clickable:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 /* ================= CHARTS ================= */
 
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+
+  grid-template-columns: repeat(auto-fit, minmax(420px,1fr));
+
   gap: 18px;
 
   padding: 10px 26px 0 26px;
@@ -144,9 +171,12 @@ body {
 
 .chart-card {
   background: white;
+
   border-radius: 16px;
+
   padding: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .chart-card__header {
@@ -164,23 +194,28 @@ body {
 
 .chart-card__badge {
   background: #edf2f7;
-  color: #4a5568;
+  color: #475569;
+
   padding: 3px 10px;
+
   border-radius: 20px;
+
   font-size: 11px;
 }
 
 .chart-container {
   width: 100%;
-  height: 300px; /* หรือตามต้องการ */
-  min-width: 0; /* ป้องกัน flex/grid บีบ */
+  height: 300px;
+  min-width: 0;
 }
 
 /* ================= LISTS ================= */
 
 .lists-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+
   gap: 18px;
 
   padding: 18px 26px 30px 26px;
@@ -188,16 +223,22 @@ body {
 
 .list-card {
   background: white;
+
   border-radius: 16px;
+
   padding: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .list-card__header {
   display: flex;
   justify-content: space-between;
+
   margin-bottom: 10px;
+
   padding-bottom: 6px;
+
   border-bottom: 1px solid #edf2f7;
 }
 
@@ -210,19 +251,28 @@ body {
 
 .list-card__count {
   font-size: 12px;
+
   background: #edf2f7;
+
   padding: 3px 10px;
+
   border-radius: 20px;
-  color: #4a5568;
+
+  color: #475569;
 }
 
 .list-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px 10px;  
+
+  padding: 8px 10px;
+
   background: #f8fafc;
+
   border-radius: 10px;
+
   margin-bottom: 6px;
+
   font-size: 13px;
 }
 
@@ -231,19 +281,17 @@ body {
   font-weight: 500;
 }
 
-
 .list-item__value {
   font-weight: 700;
   color: #2d3748;
 }
-
 
 /* ================= EMPTY / LOADING ================= */
 
 .empty-state {
   text-align: center;
   font-size: 13px;
-  color: #a0aec0;
+  color: #64748b;
   padding: 20px 0;
 }
 
@@ -257,9 +305,13 @@ body {
 .loading__spinner {
   width: 40px;
   height: 40px;
+
   border: 4px solid #e2e8f0;
+
   border-top: 4px solid #667eea;
+
   border-radius: 50%;
+
   animation: spin 1s linear infinite;
 }
 

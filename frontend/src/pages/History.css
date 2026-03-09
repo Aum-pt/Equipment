@@ -1,132 +1,191 @@
+/* ========================================
+   DASHBOARD
+======================================== */
+
 .history-dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
-  color: #e2e8f0;
+  background: linear-gradient(180deg,#f5f6fa 0%,#e4e7ec 100%);
+  color: #2d3748;
 }
 
-.dashboard-header {
-  padding: 20px 30px;
-  background: rgba(26, 32, 44, 0.95);
-  border-bottom: 2px solid #d69e2e;
-  margin-bottom: 10px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* ========================================
+   HEADER
+======================================== */
+
+.history-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px 28px;
+
+  background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
+  border-bottom:3px solid #f4b400;
+
+  color:white;
+
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
 }
 
-.dashboard-title {
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff 0%, #d69e2e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.history-header-text{
+  flex:1;
 }
 
-.dashboard-subtitle {
-  font-size: 14px;
-  color: #a0aec0;
-  margin-top: 4px;
+/* ⭐ แก้ส่วนนี้ใหม่สำหรับ HEADER */
+
+.history-main-title{
+  font-size:28px;
+  font-weight:700;
+  color:#ffd43b;
 }
+
+.history-subtitle{
+  margin-top:4px;
+  font-size:14px;
+  color:#e2e8f0;
+}
+
+.history-header-actions{
+  display:flex;
+  gap:12px;
+}
+
+/* ========================================
+   CONTENT
+======================================== */
 
 .history-content {
   width: 100%;
   padding: 10px 20px;
-  margin-top: -10px;
 }
 
+/* ========================================
+   EMPTY BOX
+======================================== */
+
 .empty-box {
-  background: rgba(26, 32, 44, 0.8);
+  background: white;
   border-radius: 12px;
-  border: 1px solid #4a5568;
+  border: 1px solid #e2e8f0;
+
   padding: 50px 20px;
   text-align: center;
+
   color: #718096;
 }
 
-.history-card {
-  background: rgba(26, 32, 44, 0.95);
-  border-radius: 14px;
-  border: 1px solid #4a5568;
-  margin-bottom: 18px;
-  overflow: hidden;
-  transition: all 0.25s ease;
-}
-
-.history-title {
-  font-size: 14px;
-  font-weight: bold;
-  color:#edebe4;
-  margin-bottom: 6px;
-} 
+/* ========================================
+   ACTION BAR
+======================================== */
 
 .history-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 10px 20px;   
+
+  padding: 10px 20px;
   padding-bottom: 0;
   margin-bottom: 8px;
 }
 
+/* ========================================
+   HISTORY CARD
+======================================== */
+
+.history-card {
+  background: white;
+
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+
+  margin-bottom: 18px;
+  overflow: hidden;
+
+  transition: all 0.25s ease;
+}
+
 .history-card:hover {
   transform: translateY(-3px);
-  border-color: #d69e2e;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  border-color: #f4b400;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
+
+/* ========================================
+   CARD HEADER
+======================================== */
 
 .history-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 14px 18px;
-  background: rgba(45, 55, 72, 0.9);
-  border-bottom: 1px solid #4a5568;
+
+  background: #f8fafc;
+  border-bottom: 1px solid #edf2f7;
 }
+
+/* ⭐ เปลี่ยนชื่อ class ป้องกันชนกับ header */
+
+.history-card-title {
+  font-size: 14px;
+  font-weight: bold;
+  color:#2d3748;
+}
+
+/* ========================================
+   ACTION BADGE
+======================================== */
 
 .history-action-badge {
   padding: 5px 14px;
   border-radius: 999px;
+
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.5px;
+
   border: 1px solid;
 }
 
 .ADD_EQUIPMENT {
-  background: rgba(214, 158, 46, 0.15);
+  background: rgba(244,180,0,0.15);
   color: #d69e2e;
   border-color: #d69e2e;
 }
 
 .UPDATE_EQUIPMENT {
-  background: rgba(72, 187, 120, 0.15);
-  color: #48bb78;
-  border-color: #48bb78;
+  background: rgba(72,187,120,0.15);
+  color: #38a169;
+  border-color: #38a169;
 }
 
 .DELETE_EQUIPMENT {
-  background: rgba(245, 101, 101, 0.15);
-  color: #f56565;
-  border-color: #f56565;
+  background: rgba(245,101,101,0.15);
+  color: #e53e3e;
+  border-color: #e53e3e;
 }
 
 .BORROW {
-  background: rgba(99, 179, 237, 0.15);
-  color: #63b3ed;
-  border-color: #63b3ed;
+  background: rgba(99,179,237,0.15);
+  color: #3182ce;
+  border-color: #3182ce;
 }
 
 .RETURN {
-  background: rgba(104, 211, 145, 0.15);
-  color: #68d391;
-  border-color: #68d391;
+  background: rgba(104,211,145,0.15);
+  color: #38a169;
+  border-color: #38a169;
 }
 
 .REPAIR_COMPLETE {
-  background: rgba(237, 137, 54, 0.15);
-  color: #ed8936;
-  border-color: #ed8936;
+  background: rgba(237,137,54,0.15);
+  color: #dd6b20;
+  border-color: #dd6b20;
 }
 
+/* ========================================
+   BODY
+======================================== */
 
 .history-body {
   padding: 18px;
@@ -135,129 +194,92 @@
 .history-description {
   font-size: 15px;
   margin-bottom: 8px;
-  color: #edf2f7;
+  color: #2d3748;
 }
 
 .history-info {
   font-size: 13px;
-  color: #a0aec0;
+  color: #4a5568;
 }
 
 .history-info span {
-  color: #e2e8f0;
+  color: #2d3748;
+  font-weight: 500;
 }
 
 .history-date {
   font-size: 12px;
-  color: #a0aec0;
+  color: #718096;
 }
 
+/* ========================================
+   BUTTON
+======================================== */
+
 .danger-btn {
-  background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+  background: linear-gradient(135deg,#e53e3e,#f56565);
+
   border: none;
   padding: 10px 18px;
+
   border-radius: 999px;
   color: white;
+
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s;
 }
 
 .danger-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
-@media (max-width: 1024px) {
-  .table-section,
-  .report-table-section,
-  .history-content {
-    padding: 20px;
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width:1024px){
+
+  .dashboard-title{
+    font-size:22px;
   }
 
-  .dashboard-title {
-    font-size: 20px;
-  }
-
-  .dashboard-subtitle {
-    font-size: 13px;
-  }
-
-  .borrow-card,
-  .repair-card,
-  .history-card {
-    padding: 16px;
-  }
 }
 
-@media (max-width: 768px) {
-  .dashboard-header {
-    padding: 16px;
+@media (max-width:768px){
+
+  .dashboard-header{
+    padding:16px;
   }
 
-  .dashboard-title {
-    font-size: 18px;
+  .dashboard-title{
+    font-size:18px;
   }
 
-  .dashboard-subtitle {
-    font-size: 12px;
+  .dashboard-subtitle{
+    font-size:12px;
   }
 
-  /* ปรับ action bar ให้เรียงลง */
-  .report-action-section,
-  .repair-actions,
-  .history-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .history-actions{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
   }
 
-  .report-search-container {
-    width: 100%;
+  .history-card-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
   }
 
-  .report-status-filter,
-  .report-date-filter,
-  .today-btn,
-  .clear-filter-btn,
-  .export-btn {
-    width: 100%;
-  }
-
-  .borrow-card-header,
-  .repair-card-header,
-  .history-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .return-item-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
 }
 
-@media (max-width: 480px) {
-  .dashboard-title {
-    font-size: 16px;
+@media (max-width:480px){
+
+  .dashboard-title{
+    font-size:16px;
   }
 
-  .borrow-title,
-  .item-name {
-    font-size: 13px;
-  }
-
-  .item-info,
-  .borrow-meta {
-    font-size: 12px;
-  }
-
-  .status-badge,
-  .repair-status-badge {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
 }

@@ -1,402 +1,403 @@
-.equipment-table-container {
-  background: rgba(26, 32, 44, 0.8);
-  border-radius: 12px;
-  border: 1px solid #4a5568;
-  overflow: hidden;
+/* =========================
+   TABLE CONTAINER
+========================= */
+
+.equipment-table-container{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:12px;
+  overflow:hidden;
+  margin-top:-10px;
 }
 
-.equipment-table-container {
-  margin-top: -10px;
+/* =========================
+   HEADER
+========================= */
+
+.table-header-section{
+  padding:14px 20px;
+  border-bottom:1px solid #81878e;
+  background:#f8fafc;
 }
 
-.table-header-section {
-  padding: 12px 20px;  
-  border-bottom: 1px solid #4a5568;
-  background: rgba(45, 55, 72, 0.5);
+.table-title{
+  font-size:16px;
+  font-weight:600;
+  color:#f4b400;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-.table-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #d69e2e;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* =========================
+   SCROLL
+========================= */
+
+.table-scroll-container{
+  overflow-x:auto;
+  max-height:600px;
 }
 
-.table-title::before {
-  font-size: 20px;
+/* scrollbar */
+
+.table-scroll-container::-webkit-scrollbar{
+  width:8px;
+  height:8px;
 }
 
-.table-scroll-container {
-  overflow-x: auto;
-  max-height: 600px;
-  scrollbar-width: thin;
-  scrollbar-color: #4a5568 #2d3748;
+.table-scroll-container::-webkit-scrollbar-thumb{
+  background:#cbd5e0;
+  border-radius:4px;
 }
 
-.table-scroll-container::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+.table-scroll-container::-webkit-scrollbar-thumb:hover{
+  background:#f4b400;
 }
 
-.table-scroll-container::-webkit-scrollbar-track {
-  background: #2d3748;
+/* =========================
+   TABLE
+========================= */
+
+.equipment-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:1000px;
 }
 
-.table-scroll-container::-webkit-scrollbar-thumb {
-  background: #4a5568;
-  border-radius: 4px;
+/* sticky header */
+
+.equipment-table thead{
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
-.table-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #d69e2e;
+/* =========================
+   TABLE HEADER
+========================= */
+
+.equipment-table th{
+
+  padding:14px 10px;
+
+  text-align:center;
+  font-size:13px;
+  font-weight:600;
+
+  background:#f8fafc;
+  color:#4a5568;
+
+  border-bottom:2px solid #f4b400;
+
+  white-space:nowrap;
 }
 
-.equipment-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  min-width: 1000px;
+/* =========================
+   TABLE CELL
+========================= */
+
+.equipment-table td{
+  padding:12px 10px;
+  font-size:14px;
+  color:#2d3748;
+  border-bottom:1px solid #edf2f7;
 }
 
-.equipment-table thead {
-  position: sticky;
-  top: 0;
-  z-index: 10;
+/* =========================
+   ROW
+========================= */
+
+.equipment-table tbody tr{
+  transition:.2s;
 }
 
-.equipment-table th {
-  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
-  padding: 16px 12px;
-  text-align: center;   /* ✅ อันเดียวพอ */
-  vertical-align: middle;
-  font-weight: 600;
-  font-size: 14px;
-  color: #d69e2e;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #d69e2e;
-  white-space: nowrap;
-  position: relative;
+.equipment-table tbody tr:nth-child(even){
+  background:#fafafa;
 }
 
-.equipment-table th:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 20%;
-  height: 60%;
-  width: 1px;
-  background: rgba(214, 158, 46, 0.3);
+.equipment-table tbody tr:hover{
+  background:#fff9e6;
 }
 
-.equipment-table td {
-  padding: 12px 10px;
-  border-bottom: 1px solid #2d3748;
-  vertical-align: middle;
-  color: #e2e8f0;
-  font-size: 14px;
+/* editing row */
+
+.editing-row{
+  background:#fff3cd !important;
+  border-left:4px solid #f4b400;
 }
 
-.equipment-table tbody tr {
-  background: rgba(26, 32, 44, 0.5);
-  height: 48px;  /* บังคับความสูงให้พอดี */
-  transition: all 0.3s ease;
-  position: relative;
+/* =========================
+   COLUMN ALIGN
+========================= */
+
+.center-column{
+  text-align:center;
 }
 
-.equipment-table tbody tr:hover {
-  background: rgba(45, 55, 72, 0.8);
-  transform: scale(1.001);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* =========================
+   CODE CELL
+========================= */
+
+.code-cell{
+  text-align:center;
 }
 
-.equipment-table tbody tr:nth-child(even) {
-  background: rgba(45, 55, 72, 0.3);
+.equipment-code{
+
+  background:#fff4cc;
+  color:#b7791f;
+
+  padding:5px 10px;
+
+  border-radius:6px;
+  font-size:13px;
+  font-weight:600;
+
+  font-family:monospace;
 }
 
-.equipment-table tbody tr:nth-child(even):hover {
-  background: rgba(45, 55, 72, 0.9);
+/* =========================
+   NAME
+========================= */
+
+.name-cell{
+  max-width:300px;
 }
 
-.editing-row {
-  background: rgba(214, 158, 46, 0.1) !important;
-  border-left: 4px solid #d69e2e;
+.equipment-name{
+  font-weight:500;
+  word-break:break-word;
 }
 
-/* Column Alignment */
-.center-column {
-  text-align: center;
+/* =========================
+   TOTAL BADGE
+========================= */
+
+.total-cell{
+  text-align:center;
 }
 
-/* Cell Styles */
-.code-cell {
-  text-align: center;
+.total-badge{
+
+  background:#e6fffa;
+  color:#2f855a;
+
+  padding:5px 14px;
+  border-radius:20px;
+
+  font-weight:600;
+  font-size:13px;
+
+  display:inline-block;
+  min-width:60px;
 }
 
-.equipment-code {
-  background: rgba(214, 158, 46, 0.1);
-  color: #d69e2e;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: 'Courier New', monospace;
-  display: inline-block;
-  border: 1px solid rgba(214, 158, 46, 0.3);
+/* =========================
+   STATUS BADGE
+========================= */
+
+.status-badge{
+  padding:5px 12px;
+  border-radius:20px;
+
+  font-size:12px;
+  font-weight:600;
+
+  text-transform:uppercase;
 }
 
-.name-cell {
-  max-width: 300px;
+.status-available{
+  background:#e6fffa;
+  color:#2f855a;
 }
 
-.equipment-name {
-  color: #fff;
-  font-weight: 500;
-  word-break: break-word;
+.status-low{
+  background:#fff8e1;
+  color:#d69e2e;
 }
 
-.total-cell {
-  text-align: center;
+.status-out{
+  background:#ffe5e5;
+  color:#e53e3e;
 }
 
-.total-badge {
-  background: rgba(56, 161, 105, 0.2);
-  color: #48bb78;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 14px;
-  min-width: 70px;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid rgba(56, 161, 105, 0.3);
+.status-editing{
+  background:#fff4cc;
+  color:#b7791f;
 }
 
-/* Status Badges */
-.status-badge {
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  display: inline-block;
-  text-align: center;
-  min-width: 85px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border: 1px solid transparent;
+/* =========================
+   INPUT
+========================= */
+
+.edit-input{
+  width:100%;
+
+  padding:8px 10px;
+
+  border:2px solid #e2e8f0;
+  border-radius:6px;
+
+  font-size:14px;
 }
 
-.status-available {
-  background: rgba(56, 161, 105, 0.2);
-  color: #48bb78;
-  border-color: rgba(56, 161, 105, 0.4);
+.edit-input:focus{
+  outline:none;
+  border-color:#f4b400;
+}
+/* =========================
+   TABLE ACTION BUTTONS
+========================= */
+
+.table-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px; /* ⭐ ระยะห่างปุ่ม */
 }
 
-.status-low {
-  background: rgba(214, 158, 46, 0.2);
-  color: #ed8936;
-  border-color: rgba(214, 158, 46, 0.4);
+/* ปุ่ม action */
+
+.action-btn{
+
+  min-width:60px;
+  height:32px;
+
+  padding:0 12px;
+
+  border:none;
+  border-radius:6px;
+
+  font-size:13px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.status-out {
-  background: rgba(229, 62, 62, 0.2);
-  color: #fc8181;
-  border-color: rgba(229, 62, 62, 0.4);
+/* edit save */
+
+.btn-edit,
+.btn-save{
+  background:#edf2f7;
+  color:#2d3748;
 }
 
-.status-editing {
-  background: rgba(214, 158, 46, 0.3);
-  color: #d69e2e;
-  border-color: rgba(214, 158, 46, 0.5);
+.btn-edit:hover,
+.btn-save:hover{
+  background:#f4b400;
+  color:white;
 }
 
-/* Edit Inputs */
-.edit-input {
-  width: 100%;
-  padding: 8px 12px;
-  background: rgba(26, 32, 44, 0.8);
-  border: 2px solid #4a5568;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 14px;
-  transition: all 0.3s;
+.btn-delete{
+  background:#ffe5e5;
+  color:#e53e3e;
 }
 
-.edit-input:focus {
-  outline: none;
-  border-color: #d69e2e;
-  box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.2);
+.btn-delete:hover{
+  background:#e53e3e;
+  color:white;
 }
 
-.edit-input::placeholder {
-  color: #718096;
+/* =========================
+   LOADING
+========================= */
+
+.loading-container{
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  padding:60px 20px;
 }
 
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
+.loading-spinner{
+
+  width:40px;
+  height:40px;
+
+  border:3px solid #e2e8f0;
+  border-top:3px solid #f4b400;
+
+  border-radius:50%;
+
+  animation:spin 1s linear infinite;
 }
 
-.action-btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.3s ease;
-  border: none;
-  min-width: 80px;
-  justify-content: center;
-  margin: 0 2px;    
-}
-
-.btn-edit, .btn-save {
-  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
-  color: #d69e2e;
-  border: 1px solid rgba(214, 158, 46, 0.5);
-}
-
-.btn-edit:hover, .btn-save:hover {
-  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-  border-color: #d69e2e;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(214, 158, 46, 0.3);
-}
-
-.btn-delete, .btn-cancel {
-  background: rgba(45, 55, 72, 0.8);
-  color: #a0aec0;
-  border: 1px solid #4a5568;
-}
-
-.btn-delete:hover {
-  background: rgba(229, 62, 62, 0.2);
-  color: #fc8181;
-  border-color: #e53e3e;
-}
-
-.btn-cancel:hover {
-  background: rgba(214, 158, 46, 0.2);
-  color: #ed8936;
-  border-color: #d69e2e;
-}
-
-/* Loading State */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  background: rgba(26, 32, 44, 0.8);
-  border-radius: 12px;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(214, 158, 46, 0.3);
-  border-top: 3px solid #d69e2e;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loading-text {
-  color: #d69e2e;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-/* Empty State */
-.empty-state {
-  padding: 60px 20px;
-  text-align: center;
-  color: #718096;
-}
-
-.empty-icon {
-  font-size: 48px;
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
-
-.empty-text {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #a0aec0;
-}
-
-.empty-subtext {
-  font-size: 14px;
-  color: #718096;
-}
-
-.type-badge {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-}
-
-.type-badge.reusable {
-  background: #e3f2fd;
-  color: #1976d2;
-}
-
-.type-badge.consumable {
-  background: #fff3e0;
-  color: #f57c00;
-}
-
-
-/* Responsive Table */
-@media (max-width: 768px) {
-  .equipment-table-container {
-    border-radius: 8px;
+@keyframes spin{
+  100%{
+    transform:rotate(360deg);
   }
-  
-  .table-header-section {
-    padding: 16px 20px;
-  }
-  
-  .equipment-table th,
-  .equipment-table td {
-    padding: 12px 8px;
-    font-size: 13px;
-  }
-  
-  .equipment-code {
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-  
-  .total-badge {
-    padding: 4px 12px;
-    font-size: 13px;
-    min-width: 60px;
-  }
-  
-  .status-badge {
-    padding: 4px 10px;
-    font-size: 11px;
-    min-width: 70px;
-  }
-  
-  .action-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-    min-width: 70px;
-  }
+}
+
+.loading-text{
+  margin-top:15px;
+  font-size:15px;
+  color:#718096;
+}
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty-state{
+  padding:60px 20px;
+  text-align:center;
+  color:#718096;
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:12px;
+}
+
+.empty-text{
+  font-size:16px;
+}
+
+.empty-subtext{
+  font-size:13px;
+}
+
+/* =========================
+   TYPE BADGE
+========================= */
+
+.type-badge{
+  padding:4px 8px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.type-badge.reusable{
+  background:#e3f2fd;
+  color:#1976d2;
+}
+
+.type-badge.consumable{
+  background:#fff3e0;
+  color:#f57c00;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.equipment-table th,
+.equipment-table td{
+  padding:10px 6px;
+  font-size:12px;
+}
+
+.action-btn{
+  padding:5px 8px;
+  font-size:11px;
+}
+
 }

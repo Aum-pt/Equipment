@@ -1,70 +1,224 @@
-.table-section {
-  margin-top: 32px;
+/* =========================
+   TABLE SECTION
+========================= */
+
+.table-section{
+  margin-top:32px;
+  padding:0 30px;
 }
 
-/* =======================
-   BORROW CARD (NEW)
-======================= */
-.borrow-card {
-  background: linear-gradient(145deg, #1a202c, #2d3748);
-  border-radius: 18px;
-  border: 1px solid #4a5568;
-  margin-bottom: 28px;
-  padding: 24px;
-  transition: 0.25s ease;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+/* =========================
+   Header
+========================= */
+
+.return-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+
+  background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
+  border-bottom:3px solid #f4b400;
+
+  color:white;
+
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
 }
 
-.borrow-card:hover {
-  transform: translateY(-4px);
-  border-color: #d69e2e;
+.return-header-text h1{
+  font-size:22px;
+  font-weight:700;
 }
 
-/* =======================
+.return-header-text p{
+  margin-top:4px;
+  font-size:13px;
+  color:#e2e8f0;
+}
+
+.return-header-actions{
+  display:flex;
+  gap:12px;
+}
+
+/* =========================
+   BORROW CARD
+========================= */
+
+.borrow-card{
+
+  background:white;
+
+  border-radius:12px;
+  border:1px solid #e2e8f0;
+
+  margin-bottom:24px;
+  padding:22px;
+
+  transition:0.25s ease;
+}
+
+.borrow-card:hover{
+
+  transform:translateY(-3px);
+
+  border-color:#f4b400;
+
+  box-shadow:0 10px 24px rgba(0,0,0,0.08);
+}
+
+/* =========================
    DOCUMENT HEADER
-======================= */
-.doc-header {
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  padding-bottom: 16px;
-  margin-bottom: 16px;
+========================= */
+
+.doc-header{
+
+  border-bottom:1px solid #edf2f7;
+
+  padding-bottom:14px;
+  margin-bottom:14px;
 }
 
-.doc-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #f6e05e;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
+.doc-title{
+
+  font-size:18px;
+  font-weight:700;
+
+  color:#2d3748;
+
+  margin-bottom:10px;
 }
 
-/* GRID INFO */
-.doc-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 24px;
-  font-size: 13px;
-  color: #e2e8f0;
+/* =========================
+   DOCUMENT INFO GRID
+========================= */
+
+.doc-info-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+  gap:8px 24px;
+
+  font-size:13px;
+
+  color:#4a5568;
 }
 
-.doc-info-grid span {
-  color: #a0aec0;
-  margin-right: 6px;
+.doc-info-grid span{
+
+  color:#718096;
+
+  font-weight:500;
+
+  margin-right:4px;
 }
 
-/* =======================
+/* =========================
    ITEMS SECTION
-======================= */
-.borrow-items {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+========================= */
+
+.borrow-items{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:12px;
 }
 
-/* =======================
-   DIVIDER LINE (OPTIONAL)
-======================= */
-.borrow-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.06);
-  margin: 16px 0;
+/* =========================
+   ITEM CARD
+========================= */
+
+.return-item-card{
+
+  display:flex;
+
+  justify-content:space-between;
+  align-items:center;
+
+  background:#fafafa;
+
+  border:1px solid #edf2f7;
+  border-radius:8px;
+
+  padding:12px 14px;
+}
+
+.return-item-card:hover{
+  background:#fff8e1;
+}
+
+/* ITEM NAME */
+
+.item-name{
+  font-weight:600;
+  color:#2d3748;
+}
+
+.item-info{
+  font-size:12px;
+  color:#718096;
+}
+
+/* =========================
+   DIVIDER
+========================= */
+
+.borrow-divider{
+
+  height:1px;
+
+  background:#edf2f7;
+
+  margin:16px 0;
+}
+
+/* =========================
+   RETURN BUTTON
+========================= */
+
+.return-btn{
+
+  background:#2f855a;
+  color:white;
+
+  border:none;
+
+  padding:8px 14px;
+
+  border-radius:6px;
+
+  font-weight:600;
+
+  cursor:pointer;
+}
+
+.return-btn:hover{
+  background:#276749;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width:768px){
+
+.table-section{
+  padding:0 20px;
+}
+
+.return-item-card{
+
+  flex-direction:column;
+  align-items:flex-start;
+
+  gap:6px;
+}
+
+.doc-info-grid{
+  grid-template-columns:1fr;
+}
+
 }

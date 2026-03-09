@@ -116,7 +116,7 @@ const FILTER_LABEL = {
   };
 
   // ================================
-// ✅ EXPORT EXCEL (ExcelJS Version)
+// EXPORT EXCEL (ExcelJS Version)
 // ================================
 
 const handleExportExcel = async () => {
@@ -145,7 +145,7 @@ const handleExportExcel = async () => {
     worksheet.addRow([]);
 
     /* ================================
-       📌 Header Row (แถวจริง)
+       Header Row (แถวจริง)
     ================================= */
 
     const headerRowIndex = worksheet.lastRow.number + 1;
@@ -166,7 +166,6 @@ const handleExportExcel = async () => {
       cell.font = { bold: true, size: 12 };
       cell.alignment = { horizontal: 'center', vertical: 'middle' };
 
-      // ✅ สีเทาแบบมืออาชีพ
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
@@ -182,7 +181,7 @@ const handleExportExcel = async () => {
     });
 
     /* ================================
-       📊 Data Rows
+       Data Rows
     ================================= */
 
     const getStatusText = (e) => {
@@ -196,7 +195,7 @@ const handleExportExcel = async () => {
 
     equipments.forEach((e, index) => {
   const available = e.available ?? e.total ?? 0; 
-  const status = getStatusText(e); // 👈 ต้องมี
+  const status = getStatusText(e); 
 
   const row = worksheet.addRow([
     index + 1,
@@ -208,7 +207,7 @@ const handleExportExcel = async () => {
     status
   ]);
 
-  // 🧱 style ปกติ
+  // style ปกติ
   row.eachCell((cell, colNumber) => {
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
 
@@ -237,7 +236,7 @@ const handleExportExcel = async () => {
 });
     
     /* ================================
-       📐 Layout
+       Layout
     ================================= */
 
     worksheet.columns = [
@@ -258,7 +257,7 @@ const handleExportExcel = async () => {
     ];
 
     /* ================================
-       💾 Export
+       Export
     ================================= */
 
     const buffer = await workbook.xlsx.writeBuffer();
@@ -292,11 +291,11 @@ const handleExportExcel = async () => {
   return (
     <div className="equipment-dashboard">
 
-      <div className="dashboard-header">
+      <div className="equipment-header">
         <div className="header-left">
           <div>
-            <h1 className="dashboard-title">ระบบจัดการคลังอุปกรณ์</h1>
-            <p className="dashboard-subtitle">
+            <h1 className="equipment-title">ระบบจัดการคลังอุปกรณ์</h1>
+            <p className="equipment-subtitle">
               จัดการข้อมูลอุปกรณ์ทั้งหมดในคลังสินค้า
             </p>
           </div>
@@ -329,7 +328,6 @@ const handleExportExcel = async () => {
             onClick={() => setShowModal(true)}
             className="add-equipment-btn"
           >
-            <span className="add-icon">+</span>
             เพิ่มอุปกรณ์ใหม่
           </button>
 

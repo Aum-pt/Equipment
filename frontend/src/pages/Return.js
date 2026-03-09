@@ -22,11 +22,11 @@ export default function Return() {
   return (
     <div className="equipment-dashboard">
       {/* Header แบบเดียวกับคลัง */}
-      <div className="dashboard-header">
+      <div className="return-header">
         <div className="header-left">
           <div>
-            <h1 className="dashboard-title">ระบบคืนอุปกรณ์</h1>
-            <p className="dashboard-subtitle">
+            <h1 className="return-title">ระบบคืนอุปกรณ์</h1>
+            <p className="return-subtitle">
               จัดการรายการอุปกรณ์ที่ยังยืมอยู่
             </p>
           </div>
@@ -52,7 +52,7 @@ export default function Return() {
             <div className="doc-title">ใบยืมอุปกรณ์</div>
 
             <div className="doc-info-grid">
-              <div><span>แผนก:</span> {borrow.department}</div>
+              <div><span>กองงาน:</span> {borrow.department}</div>
               <div><span>วัตถุประสงค์:</span> {borrow.purpose}</div>
 
               <div>

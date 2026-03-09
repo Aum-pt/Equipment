@@ -1,51 +1,75 @@
+/* ========================================
+   DASHBOARD BACKGROUND
+======================================== */
+
 .repair-dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg, #2d3748 0%, #1a202c 100%);
-  color: #e2e8f0;
+  background: linear-gradient(180deg,#f5f6fa 0%,#e4e7ec 100%);
+  color: #2d3748;
   padding-bottom: 40px;
 }
 
-/* ✅ Header style เดียวกับ History */
-.dashboard-header {
-  width: 100%;
-  padding: 20px 30px;
-  background: rgba(26, 32, 44, 0.95);
-  border-bottom: 2px solid #d69e2e;
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* ========================================
+   HEADER
+======================================== */
+
+.repair-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 28px;
+
+  background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
+  border-bottom:3px solid #f4b400;
+
+  color:white;
+
+  box-shadow:0 3px 10px rgba(0,0,0,0.15);
 }
 
-.dashboard-title {
-  font-size: 24px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff 0%, #d69e2e 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.repair-header-text h1{
+  font-size:22px;
+  font-weight:700;
 }
 
-.dashboard-subtitle {
-  font-size: 14px;
-  color: #a0aec0;
-  margin-top: 4px;
+.repair-header-text p{
+  margin-top:4px;
+  font-size:13px;
+  color:#e2e8f0;
 }
 
-/* Content spacing */
+.repair-header-actions{
+  display:flex;
+  gap:12px;
+}
+
+/* ========================================
+   CONTENT SPACING
+======================================== */
+
 .repair-dashboard > .empty-box,
 .repair-dashboard > .repair-card {
   margin: 30px;
 }
 
-/* Empty */
+/* ========================================
+   EMPTY BOX
+======================================== */
+
 .empty-box {
-  background: rgba(26, 32, 44, 0.8);
+  background: white;
   border-radius: 12px;
-  border: 1px solid #4a5568;
+  border: 1px solid #e2e8f0;
+
   padding: 50px 20px;
   text-align: center;
+
   color: #718096;
 }
+
+/* ========================================
+   ACTION BAR
+======================================== */
 
 .repair-actions {
   display: flex;
@@ -53,80 +77,106 @@
   margin: 30px;
 }
 
+/* ========================================
+   REPAIR CARD
+======================================== */
 
-/* Card style เดียวกับ History */
 .repair-card {
-  background: rgba(26, 32, 44, 0.9);
+  background: white;
+
   border-radius: 12px;
-  border: 1px solid #4a5568;
+  border: 1px solid #e2e8f0;
+
   margin: 0 30px 20px 30px;
   overflow: hidden;
-  transition: all 0.3s ease;
+
+  transition: all 0.25s ease;
 }
 
 .repair-card:hover {
-  transform: translateY(-4px);
-  border-color: #d69e2e;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  border-color: #f4b400;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* Header Row เหมือน History */
+/* ========================================
+   CARD HEADER
+======================================== */
+
 .repair-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(45, 55, 72, 0.9);
-  padding: 15px 20px;
-  border-bottom: 1px solid #4a5568;
+
+  background: #f8fafc;
+  padding: 16px 20px;
+
+  border-bottom: 1px solid #edf2f7;
 }
 
 .repair-name {
   font-weight: 600;
-  color: #fff;
+  color: #2d3748;
 }
 
-/* Badge style เดียวกับ History */
+/* ========================================
+   STATUS BADGE
+======================================== */
+
 .repair-status-badge {
   padding: 6px 14px;
   border-radius: 20px;
+
   font-size: 13px;
   font-weight: 600;
+
   border: 1px solid;
 }
 
 .repair-status-badge.กำลังซ่อม {
-  background: rgba(246, 173, 85, 0.2);
-  color: #f6ad55;
-  border-color: #f6ad55;
+  background: rgba(246,173,85,0.15);
+  color: #dd6b20;
+  border-color: #dd6b20;
 }
 
 .repair-status-badge.ซ่อมเสร็จ {
-  background: rgba(72, 187, 120, 0.2);
-  color: #48bb78;
-  border-color: #48bb78;
+  background: rgba(72,187,120,0.15);
+  color: #38a169;
+  border-color: #38a169;
 }
 
-/* Body */
+/* ========================================
+   CARD BODY
+======================================== */
+
 .repair-body {
   padding: 20px;
 }
 
 .repair-info {
   margin-bottom: 8px;
-  color: #a0aec0;
+  color: #4a5568;
   line-height: 1.5;
 }
 
-/* Button */
+/* ========================================
+   BUTTONS
+======================================== */
+
 .complete-btn {
   margin-top: 12px;
-  background: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+
+  background: linear-gradient(135deg,#38a169,#48bb78);
   border: none;
+
   padding: 8px 16px;
   border-radius: 6px;
+
   color: white;
   cursor: pointer;
+
   font-weight: 600;
+  transition: all 0.2s;
 }
 
 .complete-btn:hover {
@@ -134,114 +184,74 @@
 }
 
 .danger-btn {
-  background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+  background: linear-gradient(135deg,#e53e3e,#f56565);
+
   border: none;
   padding: 10px 18px;
+
   border-radius: 999px;
   color: white;
+
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: all 0.2s ease;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s;
 }
 
 .danger-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
 }
 
-@media (max-width: 1024px) {
-  .table-section,
-  .report-table-section,
-  .history-content {
-    padding: 20px;
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width:1024px){
+
+  .dashboard-title{
+    font-size:22px;
   }
 
-  .dashboard-title {
-    font-size: 20px;
-  }
-
-  .dashboard-subtitle {
-    font-size: 13px;
-  }
-
-  .borrow-card,
-  .repair-card,
-  .history-card {
-    padding: 16px;
-  }
 }
 
-@media (max-width: 768px) {
-  .dashboard-header {
-    padding: 16px;
+@media (max-width:768px){
+
+  .dashboard-header{
+    padding:16px;
   }
 
-  .dashboard-title {
-    font-size: 18px;
+  .dashboard-title{
+    font-size:18px;
   }
 
-  .dashboard-subtitle {
-    font-size: 12px;
+  .dashboard-subtitle{
+    font-size:12px;
   }
 
-  /* ปรับ action bar ให้เรียงลง */
-  .report-action-section,
-  .repair-actions,
-  .history-actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .repair-actions{
+    flex-direction:column;
+    align-items:stretch;
+    gap:10px;
   }
 
-  /* input เต็มจอ */
-  .report-search-container {
-    width: 100%;
+  .repair-card-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
   }
 
-  .report-status-filter,
-  .report-date-filter,
-  .today-btn,
-  .clear-filter-btn,
-  .export-btn {
-    width: 100%;
-  }
-
-  /* card layout */
-  .borrow-card-header,
-  .repair-card-header,
-  .history-card-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  /* item ใน Return */
-  .return-item-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
 }
 
-@media (max-width: 480px) {
-  .dashboard-title {
-    font-size: 16px;
+@media (max-width:480px){
+
+  .dashboard-title{
+    font-size:16px;
   }
 
-  .borrow-title,
-  .item-name {
-    font-size: 13px;
+  .repair-status-badge{
+    font-size:11px;
+    padding:4px 10px;
   }
 
-  .item-info,
-  .borrow-meta {
-    font-size: 12px;
-  }
-
-  .status-badge,
-  .repair-status-badge {
-    font-size: 11px;
-    padding: 4px 10px;
-  }
 }
