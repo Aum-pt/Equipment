@@ -42,6 +42,26 @@
   gap:12px;
 }
 
+.borrow-close-btn {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  transition: all .2s ease;
+}
+
+.borrow-close-btn:hover{
+  background:#e2e8f0;
+}
 
 .header-left{
   display:flex;

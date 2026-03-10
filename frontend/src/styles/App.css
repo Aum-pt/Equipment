@@ -1,67 +1,103 @@
-/* พื้นหลังหลัก */
+/* ===============================
+   GLOBAL
+================================ */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #121212; /* ดำ */
-  color: #f5f5f5; /* ขาวเทา */
+  background-color: #121212;
+  color: #f5f5f5;
 }
 
-/* Navbar */
+/* ===============================
+   NAVBAR
+================================ */
+
 .navbar {
   display: flex;
-  gap: 20px;
-  background: #111;
-  padding: 12px 20px;
   align-items: center;
-  position: sticky;     /* ✅ ติดบนจอ */
+  gap: 28px;
+  padding: 14px 28px;
+  background: #000000;
+  position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid #222;
 }
 
+/* logo / dashboard */
+.navbar-logo {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f4b400;
+  margin-right: 10px;
+}
 
+/* nav link */
 .navbar a {
-  color: white;
+  color: #cbd5e1;
   text-decoration: none;
   font-size: 14px;
+  font-weight: 500;
+
+  padding: 6px 4px;
+
+  position: relative;
+  transition: 0.25s;
 }
 
+/* hover effect */
 .navbar a:hover {
-  color: #4da6ff;
+  color: #f4b400;
 }
+
+/* underline animation */
+.navbar a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+
+  width: 0%;
+  height: 2px;
+
+  background: #f4b400;
+
+  transition: 0.25s;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* active page */
+.navbar a.active {
+  color: #f4b400;
+}
+
+/* ===============================
+   LOGOUT BUTTON
+================================ */
 
 .logout-btn {
-  margin-left: auto;     /* ดันไปขวาสุด */
-  background: #ff4d4f;
+  margin-left: auto;
+
+  background: #ef4444;
   border: none;
-  color: rgb(61, 61, 61);
-  padding: 6px 12px;
-  border-radius: 6px;
+
+  color: white;
+
+  padding: 8px 16px;
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
   cursor: pointer;
+
+  transition: 0.2s;
 }
 
 .logout-btn:hover {
-  background: #d9363e;
+  background: #dc2626;
+  transform: translateY(-1px);
 }
-
-
-/* Heading */
-h1 {
-  color: #FFD700; /* เหลือง */
-}
-
-/* ปุ่ม */
-.btn {
-  background-color: #FFD700;
-  color: #121212;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.btn:hover {
-  background-color: #e6c200;
-}
-

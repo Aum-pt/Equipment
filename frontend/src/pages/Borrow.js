@@ -201,7 +201,7 @@ const handleQuantityChange = (equipmentId, quantity) => {
 
           {searchTerm && (
             <button
-              className="clear-search-btn"
+              className="borrow-form-close-btn"
               onClick={() => setSearchTerm('')}
             >
               ✕
