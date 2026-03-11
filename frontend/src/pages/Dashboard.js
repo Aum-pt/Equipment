@@ -7,11 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import './Dashboard.css';
 
 /* ================= TOOLTIPS ================= */
-
 const CustomTooltipRepair = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { name, qty } = payload[0].payload;
-
     return (
       <div style={{
         background: 'white',
@@ -34,7 +32,6 @@ const CustomTooltipRepair = ({ active, payload }) => {
 const CustomTooltipUsed = ({ active, payload }) => {
   if (active && payload && payload.length) {
     const { name, qty } = payload[0].payload;
-
     return (
       <div style={{
         background: 'white',
@@ -55,19 +52,15 @@ const CustomTooltipUsed = ({ active, payload }) => {
 };
 
 /* ================= COMPONENT ================= */
-
 export default function Dashboard() {
   const [equipment, setEquipment] = useState([]);
   const [repairs, setRepairs] = useState([]);
   const [borrows, setBorrows] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
-
   useEffect(() => {
     loadData();
   }, []);
-
   const loadData = async () => {
     try {
       setLoading(true);
@@ -107,8 +100,6 @@ export default function Dashboard() {
     }).length,
 
   }), [equipment]);
-
-  // ✅ แก้ตรงนี้ (ใช้ threshold ของแต่ละ item)
   const lowStockList = equipment.filter(e => {
     const available = e.available ?? e.total ?? 0;
     const threshold = e.low_stock_threshold ?? 5;

@@ -50,10 +50,7 @@ export default function History() {
             ลบประวัติทั้งหมด
           </button>
         </div>
-
         <div className="history-content">
-
-
         {logs.length === 0 && (
           <div className="empty-box">
             ไม่มีประวัติการใช้งาน
@@ -67,14 +64,11 @@ export default function History() {
               <div className={`history-action-badge ${log.action}`}>
                 {formatAction(log.action)}
               </div>
-
               <div className="history-date">
                 {new Date(log.createdAt).toLocaleString()}
               </div>
             </div>
-
             <div className="history-body">
-
               {log.description?.split('|').map((line, index) => (
                 <div 
                   key={index} 
@@ -83,18 +77,14 @@ export default function History() {
                   {line.trim()}
                 </div>
               ))}
-
               {log.department && (
                 <div className="history-info">
                   หน่วยงาน: <span>{log.department}</span>
                 </div>
               )}
-
             </div>
-
           </div>
         ))}
-
       </div>
     </div>
   );

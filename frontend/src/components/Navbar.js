@@ -17,8 +17,6 @@ function Navbar() {
       <Link to="/return">คืนอุปกรณ์</Link>
       <Link to="/repair">อุปกรณ์ซ่อม</Link>
       <Link to="/history">ประวัติการใช้งาน</Link>
-
-      {/* ✅ เพิ่มตรงนี้ */}
       <Link to="/report">รายงาน</Link>
 
       <button onClick={logout} className="logout-btn">

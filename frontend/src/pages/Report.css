@@ -20,13 +20,13 @@
   justify-content:space-between;
   align-items:center;
   padding:18px 28px;
-
   background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
   border-bottom:3px solid #f4b400;
-
   color:white;
-
   box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .report-header-text h1{
@@ -97,7 +97,6 @@
 .report-search-input::placeholder{
   color:#a0aec0;
 }
-
 
 /* ========================================
    SELECT + DATE
@@ -196,20 +195,17 @@
 
 
 /* HEADER */
-
 .report-table th{
-
   padding:16px;
-
   font-size:13px;
   text-transform:uppercase;
-
   background:#f7fafc;
   color:#b7791f;
-
   text-align:center;
-
   border-bottom:2px solid #d69e2e;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 

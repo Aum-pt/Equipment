@@ -54,7 +54,6 @@ export default function Return() {
             <div className="doc-info-grid">
               <div><span>กองงาน:</span> {borrow.department}</div>
               <div><span>วัตถุประสงค์:</span> {borrow.purpose}</div>
-
               <div>
                 <span>วันที่เบิก:</span>{" "}
                 {new Date(borrow.borrowDate).toLocaleDateString("th-TH", {

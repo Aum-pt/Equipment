@@ -4,27 +4,18 @@ const Repair = require('../models/Repair');
 
 const LOW_STOCK_THRESHOLD = Number(process.env.LOW_STOCK || 5);
 
- // ปรับได้
-
 exports.getDashboardStats = async (req, res) => {
   try {
 
-    /** ✅ อุปกรณ์ทั้งหมด */
     const totalEquipment = await Equipment.countDocuments();
-
-    /** ✅ ใกล้หมด */
     const lowStockCount = await Equipment.countDocuments({
-      type: 'consumable',
+      type: 'reusable',
       available: { $gt: 0, $lte: LOW_STOCK_THRESHOLD }
     });
-
-
     const outOfStockCount = await Equipment.countDocuments({
       available: 0
     });
-
     const equipments = await Equipment.find();
-
     const lowStock = equipments.filter(e => {
       const threshold = e.low_stock_threshold || 5;
       return (

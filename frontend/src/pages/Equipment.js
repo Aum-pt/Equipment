@@ -43,8 +43,7 @@ const FILTER_LABEL = {
 
   /* =========================
      Handlers
-  ========================== */
-
+  ========================= */
   const handleSearchChange = (e) => {
   const value = e.target.value;
 
@@ -118,7 +117,6 @@ const FILTER_LABEL = {
   // ================================
 // EXPORT EXCEL (ExcelJS Version)
 // ================================
-
 const handleExportExcel = async () => {
   try {
     const res = await getEquipment();
@@ -135,7 +133,6 @@ const handleExportExcel = async () => {
     /* ================================
        🏷 Title
     ================================= */
-
     worksheet.mergeCells('A1:G1');
     const titleCell = worksheet.getCell('A1');
     titleCell.value = 'รายงานคลังอุปกรณ์';
@@ -143,10 +140,6 @@ const handleExportExcel = async () => {
     titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
 
     worksheet.addRow([]);
-
-    /* ================================
-       Header Row (แถวจริง)
-    ================================= */
 
     const headerRowIndex = worksheet.lastRow.number + 1;
 
@@ -183,7 +176,6 @@ const handleExportExcel = async () => {
     /* ================================
        Data Rows
     ================================= */
-
     const getStatusText = (e) => {
     const available = e.available ?? e.total ?? 0;
     const threshold = e.low_stock_threshold ?? 5;
@@ -207,7 +199,6 @@ const handleExportExcel = async () => {
     status
   ]);
 
-  // style ปกติ
   row.eachCell((cell, colNumber) => {
     cell.alignment = { horizontal: 'center', vertical: 'middle' };
 
@@ -223,7 +214,6 @@ const handleExportExcel = async () => {
     }
   });
 
-  // zebra
   if (index % 2 === 0) {
     row.eachCell((cell) => {
       cell.fill = {
@@ -238,7 +228,6 @@ const handleExportExcel = async () => {
     /* ================================
        Layout
     ================================= */
-
     worksheet.columns = [
     { width: 10 },
     { width: 20 },
@@ -249,7 +238,6 @@ const handleExportExcel = async () => {
     { width: 18 },
   ];
 
-    // ✅ สำคัญมาก — ใช้ headerRowIndex จริง
     worksheet.autoFilter = `A${headerRowIndex}:G${headerRowIndex}`;
 
     worksheet.views = [
@@ -259,7 +247,6 @@ const handleExportExcel = async () => {
     /* ================================
        Export
     ================================= */
-
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -286,8 +273,6 @@ const handleExportExcel = async () => {
 /* =========================
    UI
 ========================== */
-
-
   return (
     <div className="equipment-dashboard">
 

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const ActivityLog = require('../models/ActivityLog');
 
-/* GET LOGS ONLY */
 router.get('/', async (req, res) => {
   try {
     const logs = await ActivityLog.find().sort({ createdAt: -1 });

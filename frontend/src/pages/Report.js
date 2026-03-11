@@ -11,7 +11,6 @@ export default function Report() {
   const [selectedDate, setSelectedDate] = useState('');
 
   /* ================= FETCH REPORT ================= */
-
   const fetchReport = useCallback(async () => {
     try {
       const res = await api.get('/report', {
@@ -33,7 +32,6 @@ export default function Report() {
   }, [fetchReport]);
 
   /* ================= EXPORT EXCEL ================= */
-
   const handleExportExcel = async () => {
     if (reports.length === 0) return;
 
@@ -188,7 +186,6 @@ if (reports.length > 0) {
   };
 
   /* ================= HELPERS ================= */
-
   const clearFilters = () => {
     setSearch('');
     setStatus('');
@@ -198,7 +195,6 @@ if (reports.length > 0) {
   const todayString = new Date().toISOString().split('T')[0];
 
   /* ================= RENDER ================= */
-
   return (
     <div className="report-dashboard">
 
@@ -305,11 +301,8 @@ if (reports.length > 0) {
                           {r.status}
                         </span>
                       </td>
-
-                      {/* ✅ แยกจริง */}
                       <td>{r.borrowNote || '-'}</td>
                       <td>{r.returnNote || '-'}</td>
-
                     </tr>
                   ))
                 )}

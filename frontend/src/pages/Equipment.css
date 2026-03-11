@@ -24,22 +24,29 @@ body{
   padding-bottom:40px;
 }
 
+.action-section {
+  position: sticky;
+  top: 73px;
+  z-index: 99;
+  background: #f6f7fb; 
+  border-bottom: 1px solid #e2e8f0;
+}
+
 /* =========================
    HEADER
 ========================= */
-
 .equipment-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   padding:18px 28px;
-
   background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
   border-bottom:3px solid #f4b400;
-
   color:white;
-
   box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .equipment-header-text h1{

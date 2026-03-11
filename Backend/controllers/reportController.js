@@ -57,19 +57,14 @@ exports.getReport = async (req, res) => {
           equipmentName: equipment.name,
           equipmentCode: equipment.code,
           quantity: item.quantity,
-
           borrowDate: borrow.borrowDate,
-
           returnDate: calculatedStatus === 'คืนแล้ว'
             ? borrow.updatedAt
             : null,
 
           repairDate: repair?.reportDate || null,
           repairCompletedDate: repair?.completedDate || null,
-
           status: calculatedStatus,
-
-          /* ⭐ เพิ่มตรงนี้ */
           borrowNote: borrow.note || '',
           returnNote: item.returnNote || ''
         });

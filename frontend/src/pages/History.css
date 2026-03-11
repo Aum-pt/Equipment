@@ -16,15 +16,14 @@
   display:flex;
   justify-content:space-between;
   align-items:center;
-
   padding:18px 28px;
-
   background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
   border-bottom:3px solid #f4b400;
-
   color:white;
-
   box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .history-header-text{
