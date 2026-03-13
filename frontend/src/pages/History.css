@@ -1,284 +1,231 @@
 /* ========================================
    DASHBOARD
 ======================================== */
-
 .history-dashboard {
   min-height: 100vh;
-  background: linear-gradient(180deg,#f5f6fa 0%,#e4e7ec 100%);
+  background: #f0f2f5;
   color: #2d3748;
 }
 
 /* ========================================
    HEADER
 ======================================== */
-
-.history-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 28px;
-  background:linear-gradient(135deg,#4a4a4a,#9b9b9b);
-  border-bottom:3px solid #f4b400;
-  color:white;
-  box-shadow:0 3px 10px rgba(0,0,0,0.15);
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  background: linear-gradient(135deg, #4a4a4a, #9b9b9b);
+  border-bottom: 3px solid #f4b400;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
-.history-header-text{
-  flex:1;
+.history-header-text { flex: 1; }
+
+.history-main-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f4f4f2;
 }
 
-/* ⭐ แก้ส่วนนี้ใหม่สำหรับ HEADER */
-
-.history-main-title{
-  font-size:28px;
-  font-weight:700;
-  color:#f4f4f2;
-}
-
-.history-subtitle{
-  margin-top:4px;
-  font-size:14px;
-  color:#e2e8f0;
-}
-
-.history-header-actions{
-  display:flex;
-  gap:12px;
-}
-
-/* ========================================
-   CONTENT
-======================================== */
-
-.history-content {
-  width: 100%;
-  padding: 10px 20px;
-}
-
-/* ========================================
-   EMPTY BOX
-======================================== */
-
-.empty-box {
-  background: white;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-
-  padding: 50px 20px;
-  text-align: center;
-
-  color: #718096;
+.history-subtitle {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #e2e8f0;
 }
 
 /* ========================================
    ACTION BAR
 ======================================== */
-
 .history-actions {
   display: flex;
   justify-content: flex-end;
+  padding: 14px 24px;
+}
 
-  padding: 10px 20px;
-  padding-bottom: 0;
-  margin-bottom: 8px;
+/* ========================================
+   CONTENT
+======================================== */
+.history-content {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ========================================
+   EMPTY BOX
+======================================== */
+.empty-box {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 50px 20px;
+  text-align: center;
+  color: #718096;
 }
 
 /* ========================================
    HISTORY CARD
 ======================================== */
-
 .history-card {
   background: white;
-
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-
-  margin-bottom: 18px;
+  border-radius: 12px;
+  border: 1px solid #e8ecf0;
   overflow: hidden;
-
-  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
 }
 
 .history-card:hover {
-  transform: translateY(-3px);
-  border-color: #f4b400;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+/* แถบสีด้านซ้าย */
+.history-card-accent {
+  width: 5px;
+  flex-shrink: 0;
+}
+
+.history-card-accent.BORROW           { background: #3182ce; }
+.history-card-accent.RETURN           { background: #38a169; }
+.history-card-accent.ADD_EQUIPMENT    { background: #d69e2e; }
+.history-card-accent.UPDATE_EQUIPMENT { background: #805ad5; }
+.history-card-accent.DELETE_EQUIPMENT { background: #e53e3e; }
+.history-card-accent.REPAIR_COMPLETE  { background: #dd6b20; }
+
+.history-card-inner {
+  flex: 1;
+  padding: 14px 18px;
 }
 
 /* ========================================
    CARD HEADER
 ======================================== */
-
 .history-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  padding: 14px 18px;
-
-  background: #f8fafc;
-  border-bottom: 1px solid #edf2f7;
-}
-
-/* ⭐ เปลี่ยนชื่อ class ป้องกันชนกับ header */
-
-.history-card-title {
-  font-size: 14px;
-  font-weight: bold;
-  color:#2d3748;
+  margin-bottom: 10px;
 }
 
 /* ========================================
    ACTION BADGE
 ======================================== */
-
 .history-action-badge {
-  padding: 5px 14px;
+  padding: 4px 12px;
   border-radius: 999px;
-
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.5px;
-
-  border: 1px solid;
+  letter-spacing: 0.3px;
+  border: 1.5px solid;
 }
 
-.ADD_EQUIPMENT {
-  background: rgba(244,180,0,0.15);
-  color: #d69e2e;
-  border-color: #d69e2e;
-}
+.ADD_EQUIPMENT    { background: rgba(244,180,0,0.12);  color: #d69e2e; border-color: #d69e2e; }
+.UPDATE_EQUIPMENT { background: rgba(128,90,213,0.12); color: #805ad5; border-color: #805ad5; }
+.DELETE_EQUIPMENT { background: rgba(229,62,62,0.12);  color: #e53e3e; border-color: #e53e3e; }
+.BORROW           { background: rgba(49,130,206,0.12); color: #3182ce; border-color: #3182ce; }
+.RETURN           { background: rgba(56,161,105,0.12); color: #38a169; border-color: #38a169; }
+.REPAIR_COMPLETE  { background: rgba(221,107,32,0.12); color: #dd6b20; border-color: #dd6b20; }
 
-.UPDATE_EQUIPMENT {
-  background: rgba(72,187,120,0.15);
-  color: #38a169;
-  border-color: #38a169;
-}
-
-.DELETE_EQUIPMENT {
-  background: rgba(245,101,101,0.15);
-  color: #e53e3e;
-  border-color: #e53e3e;
-}
-
-.BORROW {
-  background: rgba(99,179,237,0.15);
-  color: #3182ce;
-  border-color: #3182ce;
-}
-
-.RETURN {
-  background: rgba(104,211,145,0.15);
-  color: #38a169;
-  border-color: #38a169;
-}
-
-.REPAIR_COMPLETE {
-  background: rgba(237,137,54,0.15);
-  color: #dd6b20;
-  border-color: #dd6b20;
+/* ========================================
+   DATE
+======================================== */
+.history-date {
+  font-size: 12px;
+  color: #a0aec0;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ========================================
    BODY
 ======================================== */
-
 .history-body {
-  padding: 18px;
-}
-
-.history-description {
-  font-size: 15px;
-  margin-bottom: 8px;
-  color: #2d3748;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .history-info {
   font-size: 13px;
-  color: #4a5568;
+  color: #718096;
 }
 
 .history-info span {
   color: #2d3748;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.history-date {
-  font-size: 12px;
-  color: #718096;
+.history-summary {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* ========================================
+   ITEMS LIST
+======================================== */
+.history-items {
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.history-item-row {
+  font-size: 13px;
+  color: #4a5568;
+  padding: 3px 0;
+  border-bottom: 1px solid #edf2f7;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-item-row:last-child { border-bottom: none; }
+
+.history-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
 }
 
 /* ========================================
    BUTTON
 ======================================== */
-
 .danger-btn {
-  background: linear-gradient(135deg,#e53e3e,#f56565);
-
+  background: linear-gradient(135deg, #e53e3e, #f56565);
   border: none;
-  padding: 10px 18px;
-
+  padding: 9px 18px;
   border-radius: 999px;
   color: white;
-
   font-weight: 600;
+  font-size: 13px;
   cursor: pointer;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(229,62,62,0.3);
   transition: all 0.2s;
 }
 
 .danger-btn:hover {
   transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(229,62,62,0.4);
 }
 
 /* ========================================
    RESPONSIVE
 ======================================== */
-
-@media (max-width:1024px){
-
-  .dashboard-title{
-    font-size:22px;
-  }
-
-}
-
-@media (max-width:768px){
-
-  .dashboard-header{
-    padding:16px;
-  }
-
-  .dashboard-title{
-    font-size:18px;
-  }
-
-  .dashboard-subtitle{
-    font-size:12px;
-  }
-
-  .history-actions{
-    flex-direction:column;
-    align-items:stretch;
-    gap:10px;
-  }
-
-  .history-card-header{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-  }
-
-}
-
-@media (max-width:480px){
-
-  .dashboard-title{
-    font-size:16px;
-  }
-
+@media (max-width: 768px) {
+  .history-content { padding: 0 12px 20px; }
+  .history-card-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .history-actions { padding: 10px 12px; }
 }

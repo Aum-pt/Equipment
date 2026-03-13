@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './BorrowForm.css';
 
 export default function BorrowForm({ 
@@ -7,11 +7,17 @@ export default function BorrowForm({
   onConfirm, 
   onCancel 
 }) {
-
   const [form, setForm] = useState({
     department: 'กองงาน1',
     purpose: 'ติดตั้ง'
   });
+
+  useEffect(() => {
+  document.body.style.overflow = 'hidden';
+  return () => {
+    document.body.style.overflow = '';
+  };
+}, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,103 +28,86 @@ export default function BorrowForm({
     }
 
     const borrowDetails = selectedEquipments
-    .map(item => ({
-      equipment: item._id,
-      quantity: Number(quantities[item._id] || 0)
-    }))
-    .filter(item => item.quantity > 0);
+      .map(item => ({
+        equipment: item._id,
+        quantity: Number(quantities[item._id] || 0)
+      }))
+      .filter(item => item.quantity > 0);
 
-  if (borrowDetails.length === 0) {
-    alert('กรุณาระบุจำนวนที่ต้องการเบิก');
-    return;
-  }
-
+    if (borrowDetails.length === 0) {
+      alert('กรุณาระบุจำนวนที่ต้องการเบิก');
+      return;
+    }
 
     onConfirm({
       borrowDetails,
       department: form.department,
       purpose: form.purpose,
-      note: form.note    
+      note: form.note
     });
-  };  
+  };
 
   const totalQuantity = selectedEquipments.reduce(
-  (sum, item) => sum + Number(quantities[item._id] || 0),
-  0
+    (sum, item) => sum + Number(quantities[item._id] || 0),
+    0
   );
 
   return (
-    <div 
+    <div
       className="borrow-form-overlay"
       onClick={(e) => {
-        if (e.target.classList.contains('borrow-form-overlay')) {
-          onCancel();
-        }
+        if (e.target.classList.contains('borrow-form-overlay')) onCancel();
       }}
     >
       <div className="borrow-form-container">
 
+        {/* ── HEADER (ล็อค) ── */}
         <div className="borrow-form-header">
           <h3 className="borrow-form-title">
             รายการเบิกอุปกรณ์ ({selectedEquipments.length} รายการ)
           </h3>
-          <button 
-            className="borrow-form-close-btn" 
-            onClick={onCancel}
-          >
-            ✕
-          </button>
+          <button className="borrow-form-close-btn" onClick={onCancel}>✕</button>
         </div>
 
-        {/* สรุปยอด */}
+        {/* ── SUMMARY (ล็อค) ── */}
         <div className="borrow-summary">
           <div className="summary-item">
             <span className="summary-label">รวมจำนวน:</span>
-            <span className="summary-value quantity-total">
-              {totalQuantity} ชิ้น
-            </span>
+            <span className="summary-value quantity-total">{totalQuantity} ชิ้น</span>
           </div>
         </div>
 
-        {/* รายการอุปกรณ์ที่เลือก */}
-        <div className="selected-equipments-section">
-          <h4>
-            อุปกรณ์ที่เลือก ({selectedEquipments.length} รายการ)
-          </h4>
+        {/* ── BODY (scroll ได้) ── */}
+        <div className="borrow-form-body">
 
-          <div className="selected-equipments-list">
-            {selectedEquipments.map((item, index) => (
-              <div key={item._id || index} className="selected-equipment-item">
-                <div className="equipment-summary">
-                  <span className="equipment-code-badge">
-                    {item.code}
-                  </span>
-                  <span className="equipment-name">
-                    {item.name}
-                  </span>
-                  <span className="equipment-quantity">
-                    จำนวน: <strong>{quantities[item._id] || 0}</strong> ชิ้น
-                  </span>
+          {/* รายการอุปกรณ์ */}
+          <div className="selected-equipments-section">
+            <h4>อุปกรณ์ที่เลือก ({selectedEquipments.length} รายการ)</h4>
+            <div className="selected-equipments-list">
+              {selectedEquipments.map((item, index) => (
+                <div key={item._id || index} className="selected-equipment-item">
+                  <div className="equipment-summary">
+                    <span className="equipment-code-badge">{item.code}</span>
+                    <span className="equipment-name">{item.name}</span>
+                    <span className="equipment-quantity">
+                      จำนวน: <strong>{quantities[item._id] || 0}</strong> ชิ้น
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* ฟอร์มรายละเอียด */}
-        <form onSubmit={handleSubmit} className="borrow-details-form">
-          <div className="form-section">
-            <h4>รายละเอียดการเบิก</h4>
-
-            <div className="form-row">
+          {/* ฟอร์มรายละเอียด */}
+          <div className="borrow-details-form">
+            <div className="form-section">
+              <h4>รายละเอียดการเบิก</h4>
+              <div className="form-row">
                 <div className="form-group">
                   <label className="form-label">กองงาน</label>
                   <select
-                    name="department"
                     value={form.department}
-                    onChange={(e) =>
-                      setForm({ ...form, department: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, department: e.target.value })}
                     className="form-select"
                   >
                     <option value="กองงาน1">กองงาน1</option>
@@ -126,15 +115,11 @@ export default function BorrowForm({
                     <option value="กองงาน3">กองงาน3</option>
                   </select>
                 </div>
-
                 <div className="form-group">
                   <label className="form-label">ประเภทการเบิก</label>
                   <select
-                    name="purpose"
                     value={form.purpose}
-                    onChange={(e) =>
-                      setForm({ ...form, purpose: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, purpose: e.target.value })}
                     className="form-select"
                   >
                     <option value="ติดตั้ง">ติดตั้ง</option>
@@ -142,39 +127,27 @@ export default function BorrowForm({
                   </select>
                 </div>
               </div>
-
-              {/* หมายเหตุเต็มแถว */}
               <div className="form-group full-width">
                 <label className="form-label">หมายเหตุ</label>
                 <textarea
-                  name="note"
                   value={form.note || ''}
-                  onChange={(e) =>
-                    setForm({ ...form, note: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, note: e.target.value })}
                   className="form-textarea-large"
                   rows="4"
                   placeholder="ระบุรายละเอียดเพิ่มเติม เช่น สถานที่ติดตั้ง, ผู้รับผิดชอบ, หมายเลขงาน..."
                 />
               </div>
             </div>
-
-          <div className="form-footer">
-            <button 
-              type="button" 
-              className="btn btn-cancel" 
-              onClick={onCancel}
-            >
-              ยกเลิก
-            </button>
-            <button 
-              type="submit" 
-              className="btn btn-confirm"
-            >
-              ยืนยันการเบิก
-            </button>
           </div>
-        </form>
+
+        </div>
+
+        {/* ── FOOTER (ล็อค) ── */}
+        <div className="borrow-form-footer">
+          <button type="button" className="btn btn-cancel" onClick={onCancel}>ยกเลิก</button>
+          <button type="button" className="btn btn-confirm" onClick={handleSubmit}>ยืนยันการเบิก</button>
+        </div>
+
       </div>
     </div>
   );

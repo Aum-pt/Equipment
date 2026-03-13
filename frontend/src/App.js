@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';  // npm install jwt-decode
+import { jwtDecode } from 'jwt-decode';  
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -25,7 +25,6 @@ function App() {
     if (storedToken) setToken(storedToken);
   }, []);
 
-  // ✅ เพิ่มตรงนี้
   useEffect(() => {
     const interval = setInterval(() => {
       const t = localStorage.getItem('token');
