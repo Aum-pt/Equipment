@@ -1,7 +1,4 @@
-// ======================
-// โหลดแพ็กเกจที่จำเป็น
-// ======================
-require('dotenv').config();          // ต้องอยู่บนสุดเสมอ
+require('dotenv').config();          
 
 const express = require('express');  
 const mongoose = require('mongoose');
@@ -14,18 +11,11 @@ const borrowRoutes = require('./Backend/routes/borrowRoutes');
 const repairRoutes = require('./Backend/routes/repairRoutes');
 const reportRoutes = require('./Backend/routes/reportRoutes');
 const authRoutes = require('./Backend/routes/authRoutes');
-
-// ======================
-// เริ่มต้น Express
-// ======================
 const app = express();
 
 // Middleware
 app.use(cors());
 
-// ======================
-// เชื่อมต่อ MongoDB
-// ======================
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ MongoDB Connected');
@@ -35,9 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
     console.error('❌ MongoDB Error:', err.message);
   });
 
-// ======================
 // Routes
-// ======================
 app.use(express.json());   
 app.use('/api/equipment', equipmentRoutes);
 app.use('/api/borrow', borrowRoutes);
@@ -46,9 +34,6 @@ app.use('/api/report', reportRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/auth', authRoutes);
 
-// ======================
-// Start Server
-// ======================
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

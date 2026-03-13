@@ -17,7 +17,7 @@ router.post('/login', (req, res) => {
 
   if (username === FIXED_USER && password === FIXED_PASS) {
     const token = jwt.sign({ user: username }, JWT_SECRET, {
-      expiresIn: '1d',
+      expiresIn: '8h',
     });
 
     return res.json({ token });

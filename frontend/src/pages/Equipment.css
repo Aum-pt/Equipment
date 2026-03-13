@@ -131,7 +131,7 @@ body{
 .action-buttons-group{
   display:flex;
   align-items:center;
-  gap:14px; /* ⭐ ระยะห่างระหว่างปุ่ม */
+  gap:14px; 
 }
 
 .search-container{

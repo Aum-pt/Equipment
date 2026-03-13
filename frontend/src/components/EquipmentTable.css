@@ -1,7 +1,6 @@
 /* =========================
    TABLE CONTAINER
 ========================= */
-
 .equipment-table-container{
   background:white;
   border:1px solid #e2e8f0;
@@ -13,7 +12,6 @@
 /* =========================
    HEADER
 ========================= */
-
 .table-header-section{
   padding:14px 20px;
   border-bottom:1px solid #81878e;
@@ -77,18 +75,13 @@
 ========================= */
 
 .equipment-table th{
-
   padding:14px 10px;
-
   text-align:center;
   font-size:13px;
   font-weight:600;
-
   background:#f8fafc;
-  color:#4a5568;
-
-  border-bottom:2px solid #f4b400;
-
+  color:#d69e2e;
+  border-bottom:2px solid #d69e2e;
   white-space:nowrap;
 }
 

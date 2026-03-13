@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';  // npm install jwt-decode
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -24,53 +25,41 @@ function App() {
     if (storedToken) setToken(storedToken);
   }, []);
 
+  // ✅ เพิ่มตรงนี้
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const t = localStorage.getItem('token');
+      if (!t) return;
+
+      try {
+        const decoded = jwtDecode(t);
+        if (decoded.exp < Date.now() / 1000) {
+          localStorage.removeItem('token');
+          setToken(null);
+          window.location.href = '/login';
+        }
+      } catch {
+        localStorage.removeItem('token');
+        setToken(null);
+        window.location.href = '/login';
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <Router>
       {token && <Navbar />}   
       <Routes>
         <Route path="/login" element={<Login setToken={setToken} />} />
-
-        <Route path="/" element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        } />
-
-        <Route path="/equipment" element={
-          <PrivateRoute>
-            <Equipment />
-          </PrivateRoute>
-        } />
-
-        <Route path="/borrow" element={
-          <PrivateRoute>
-            <Borrow />
-          </PrivateRoute>
-        } />
-
-        <Route path="/return" element={
-          <PrivateRoute>
-            <Return />
-          </PrivateRoute>
-        } />
-
-        <Route path="/repair" element={
-          <PrivateRoute>
-            <Repair />
-          </PrivateRoute>
-        } />
-
-        <Route path="/history" element={
-          <PrivateRoute>
-            <History />
-          </PrivateRoute>
-        } />
-
-        <Route path="/report" element={
-          <PrivateRoute>
-            <Report />
-          </PrivateRoute>
-        } />
+        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path="/equipment" element={<PrivateRoute><Equipment /></PrivateRoute>} />
+        <Route path="/borrow" element={<PrivateRoute><Borrow /></PrivateRoute>} />
+        <Route path="/return" element={<PrivateRoute><Return /></PrivateRoute>} />
+        <Route path="/repair" element={<PrivateRoute><Repair /></PrivateRoute>} />
+        <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
+        <Route path="/report" element={<PrivateRoute><Report /></PrivateRoute>} />
       </Routes>
     </Router>
   );

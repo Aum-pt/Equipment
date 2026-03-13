@@ -29,7 +29,7 @@ const borrowItemSchema = new mongoose.Schema({
   }
 });
 
-/* ⭐ ใส่ตรงนี้ */
+
 borrowItemSchema.pre('save', function () {
   if (this.returnedQty + this.damagedQty > this.quantity) {
     throw new Error('returnedQty + damagedQty เกิน quantity');

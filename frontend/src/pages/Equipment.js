@@ -281,7 +281,7 @@ const handleExportExcel = async () => {
           <div>
             <h1 className="equipment-title">ระบบจัดการคลังอุปกรณ์</h1>
             <p className="equipment-subtitle">
-              จัดการข้อมูลอุปกรณ์ทั้งหมดในคลังสินค้า
+              จัดการข้อมูลอุปกรณ์ทั้งหมดในคลัง
             </p>
           </div>
         </div>
