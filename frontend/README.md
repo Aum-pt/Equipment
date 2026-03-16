@@ -1,70 +1,306 @@
-# Getting Started with Create React App
+# Equipment Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ระบบบริหารจัดการอุปกรณ์ภายในองค์กร ครอบคลุมตั้งแต่การบันทึกอุปกรณ์เข้าคลัง การเบิก-คืน การซ่อม ไปจนถึงการออกรายงาน
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+| ฝั่ง | เทคโนโลยี |
+|------|-----------|
+| Frontend | React, React Router, Recharts, ExcelJS |
+| Backend | Node.js, Express |
+| Database | MongoDB (Mongoose) |
+| Auth | JWT (jsonwebtoken) |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## การติดตั้ง
 
-### `npm test`
+### 1. Clone โปรเจกต์
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/Aum-pt/Equipment.git
+cd Equipment
+```
 
-### `npm run build`
+### 2. ติดตั้ง Dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Backend
+npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Frontend
+cd client
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 3. ตั้งค่า Environment Variables
 
-### `npm run eject`
+สร้างไฟล์ `.env` ที่ root ของโปรเจกต์
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```env
+MONGO_URI=mongodb://localhost:27017/equipment-db
+JWT_SECRET=your_jwt_secret_key
+PORT=5000
+LOW_STOCK=5
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 4. รันระบบ
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+# รัน Backend
+node server.js
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# รัน Frontend (อีก terminal)
+cd frontend 
+npm start
+```
 
-## Learn More
+เปิดเบราว์เซอร์ที่ `http://localhost:3000`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## โครงสร้างโปรเจกต์
 
-### Code Splitting
+```
+equipment-management-system/
+├── Backend/
+│   ├── controllers/
+│   │   ├── borrowController.js
+│   │   ├── dashboardController.js
+│   │   ├── equipmentController.js
+│   │   ├── repairController.js
+│   │   └── reportController.js
+│   ├── middleware/
+│   │   └── authMiddleware.js
+│   ├── models/
+│   │   ├── ActivityLog.js
+│   │   ├── Borrow.js
+│   │   ├── Equipment.js
+│   │   └── Repair.js
+│   └── routes/
+│       ├── activityRoutes.js
+│       ├── authRoutes.js
+│       ├── borrowRoutes.js
+│       ├── dashboardRoutes.js
+│       ├── equipmentRoutes.js
+│       ├── repairRoutes.js
+│       └── reportRoutes.js
+├── client/
+│   └── src/
+│       ├── components/
+│       │   ├── BorrowForm.js
+│       │   ├── ConfirmModal.js
+│       │   ├── EquipmentTable.js
+│       │   ├── Navbar.js
+│       │   ├── ReturnForm.js
+│       │   └── Toast.js
+│       ├── pages/
+│       │   ├── Borrow.js
+│       │   ├── Dashboard.js
+│       │   ├── Equipment.js
+│       │   ├── History.js
+│       │   ├── Login.js
+│       │   ├── Repair.js
+│       │   ├── Report.js
+│       │   └── Return.js
+│       ├── services/
+│       │   └── api.js
+│       └── config/
+│           └── constants.js
+└── server.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+ทุก endpoint (ยกเว้น `/api/auth/login`) ต้องแนบ JWT Token ใน Header
 
-### Making a Progressive Web App
+```
+Authorization: Bearer <token>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Auth
 
-### Advanced Configuration
+| Method | Endpoint | คำอธิบาย |
+|--------|----------|----------|
+| POST | `/api/auth/login` | เข้าสู่ระบบ รับ JWT Token กลับมา |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Equipment
 
-### Deployment
+| Method | Endpoint | คำอธิบาย |
+|--------|----------|----------|
+| GET | `/api/equipment` | ดึงอุปกรณ์ทั้งหมด |
+| POST | `/api/equipment` | เพิ่มอุปกรณ์ใหม่ |
+| PUT | `/api/equipment/:id` | แก้ไขข้อมูลอุปกรณ์ |
+| DELETE | `/api/equipment/:id` | ลบอุปกรณ์ |
+| PATCH | `/api/equipment/:id/stock` | เพิ่มจำนวนสต็อก |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Borrow
 
-### `npm run build` fails to minify
+| Method | Endpoint | คำอธิบาย |
+|--------|----------|----------|
+| GET | `/api/borrow` | ดึงใบยืมทั้งหมด |
+| GET | `/api/borrow/active` | ดึงใบยืมที่ยังยืมอยู่ |
+| POST | `/api/borrow` | สร้างใบยืม (เบิกอุปกรณ์) |
+| POST | `/api/borrow/return/:id` | คืนอุปกรณ์ |
+| DELETE | `/api/borrow/:id` | ลบใบยืม |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Repair
+
+| Method | Endpoint | คำอธิบาย |
+|--------|----------|----------|
+| GET | `/api/repair` | ดึงรายการซ่อมทั้งหมด |
+| PUT | `/api/repair/:id/complete` | บันทึกซ่อมเสร็จ |
+| DELETE | `/api/repair/completed` | ลบรายการซ่อมที่เสร็จแล้ว |
+
+### Report & Activity
+
+| Method | Endpoint | คำอธิบาย |
+|--------|----------|----------|
+| GET | `/api/report` | ดึงรายงาน รองรับ query: `search`, `status`, `date` |
+| GET | `/api/activity` | ดึง Activity Log ทั้งหมด |
+| DELETE | `/api/activity` | ลบ Activity Log ทั้งหมด |
+
+---
+
+## คู่มือการใช้งาน
+
+### เข้าสู่ระบบ
+
+ไปที่ `http://localhost:3000/login` แล้วกรอก Username และ Password
+Session มีอายุ **8 ชั่วโมง** หลังจากนั้นระบบจะ Logout อัตโนมัติ
+
+---
+
+### Dashboard
+
+แสดงภาพรวมของอุปกรณ์ทั้งหมด
+
+- **การ์ดสถิติ** — อุปกรณ์ทั้งหมด / ใกล้หมด / หมดแล้ว คลิกเพื่อ filter ในหน้าคลัง
+- **กราฟ** — Top 5 อุปกรณ์ที่ใช้บ่อย และ Top 5 อุปกรณ์ที่ซ่อมบ่อย
+- **รายการแจ้งเตือน** — อุปกรณ์ที่ต้องสั่งเพิ่มโดยด่วน
+
+---
+
+### คลังอุปกรณ์
+
+จัดการข้อมูลอุปกรณ์ทั้งหมด
+
+**เพิ่มอุปกรณ์**
+1. กดปุ่ม **เพิ่มอุปกรณ์ใหม่**
+2. กรอกรหัส ชื่อ จำนวน ประเภท และค่าแจ้งเตือน
+3. กด **บันทึก** — หากรหัสซ้ำ ระบบจะรวมจำนวนเข้ากับรายการเดิมแทน
+
+**ประเภทอุปกรณ์**
+
+| ประเภท | ลักษณะ |
+|--------|--------|
+| `reusable` (ใช้ซ้ำได้) | ต้องคืนหลังใช้งาน ระบบติดตามสถานะ |
+| `consumable` (ใช้แล้วหมด) | ไม่ต้องคืน ใบยืมปิดทันที |
+
+**สถานะอุปกรณ์**
+
+| สถานะ | เงื่อนไข |
+|--------|---------|
+| พร้อมใช้งาน | `available > low_stock_threshold` |
+| เหลือน้อย | `0 < available <= low_stock_threshold` (reusable เท่านั้น) |
+| หมดสต็อก | `available === 0` |
+
+---
+
+### เบิกอุปกรณ์
+
+1. ค้นหาและติ๊กเลือกอุปกรณ์ที่ต้องการ
+2. ระบุจำนวนด้วยปุ่ม +/− (ไม่เกิน available)
+3. กดปุ่ม **เบิกอุปกรณ์**
+4. เลือกกองงาน (`กองงาน1` / `กองงาน2` / `กองงาน3`) และประเภท (`ติดตั้ง` / `ซ่อมบำรุง`)
+5. กด **ยืนยันการเบิก**
+
+> ถ้าทุก item เป็น `consumable` → ใบยืมปิดเป็น `เสร็จสิ้น` ทันที
+> ถ้ามี `reusable` อยู่ด้วย → สถานะเป็น `ยืมอยู่` รอคืน
+
+---
+
+### คืนอุปกรณ์
+
+หน้านี้แสดงเฉพาะใบยืมที่มีสถานะ `ยืมอยู่`
+
+1. เลือกใบยืมที่ต้องการคืน
+2. ระบุ **จำนวนคืนปกติ** และ **จำนวนชำรุด**
+3. กรอกหมายเหตุ (ถ้ามี) แล้วกด **คืนอุปกรณ์**
+
+**เงื่อนไข**
+- `returnQty + damagedQty` ต้องไม่เกินจำนวนที่ค้างอยู่
+- สามารถคืนแบ่งหลายครั้งได้
+- เมื่อคืนครบทุก reusable item → ใบยืมเปลี่ยนเป็น `คืนแล้ว` อัตโนมัติ
+- อุปกรณ์ที่ชำรุดจะถูกส่งไปยังระบบซ่อมอัตโนมัติ
+
+---
+
+### ระบบซ่อมอุปกรณ์
+
+รายการซ่อมถูกสร้างอัตโนมัติเมื่อมีการคืนอุปกรณ์ชำรุด
+
+1. กดปุ่ม **ซ่อมเสร็จแล้ว** ในรายการที่ต้องการ
+2. ระบบจะเพิ่มจำนวนอุปกรณ์กลับเข้าคลัง (`available += damagedQty`)
+3. กด **ลบรายการซ่อมเสร็จ** เพื่อล้างรายการที่เสร็จแล้ว
+
+---
+
+### ประวัติการใช้งาน
+
+แสดง Activity Log ทุกกิจกรรมในระบบ เรียงจากใหม่ไปเก่า
+
+| Action | เกิดขึ้นเมื่อ |
+|--------|-------------|
+| `ADD_EQUIPMENT` | เพิ่มอุปกรณ์ใหม่ |
+| `UPDATE_EQUIPMENT` | แก้ไขข้อมูลอุปกรณ์ |
+| `DELETE_EQUIPMENT` | ลบอุปกรณ์ |
+| `BORROW` | สร้างใบยืม |
+| `RETURN` | คืนอุปกรณ์ |
+| `REPAIR_COMPLETE` | บันทึกซ่อมเสร็จ |
+
+---
+
+### รายงาน
+
+ดูข้อมูลการเบิก คืน และซ่อมทุกใบยืม
+
+**Query Parameters สำหรับ `/api/report`**
+
+| Parameter | ตัวอย่าง | คำอธิบาย |
+|-----------|---------|----------|
+| `search` | `?search=สว่าน` | กรองตามชื่ออุปกรณ์ |
+| `status` | `?status=ยืมอยู่` | กรองตามสถานะ |
+| `date` | `?date=2025-01-15` | กรองตามวันที่ (เบิก/คืน/ซ่อม) |
+
+---
+
+## Flow การทำงาน
+
+```
+เพิ่มอุปกรณ์
+     │
+     ▼
+พร้อมใช้งาน
+     │
+     ▼ เบิก
+ยืมอยู่
+     │
+     ▼ คืน
+     ├─ ปกติ ──────────────────► available + returnQty
+     │
+     └─ ชำรุด ──► กำลังซ่อม ──► ซ่อมเสร็จ ──► available + damagedQty
+                                      │
+                         (ครบทุก item) ▼
+                               คืนแล้ว
+```
+
+---
+
+## License
+
+MIT

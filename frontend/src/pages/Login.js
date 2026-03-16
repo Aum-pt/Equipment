@@ -4,7 +4,7 @@ import api from '../services/api';
 import './Login.css';
 
 
-export default function Login({ setToken }) {   // ⭐ เปลี่ยนตรงนี้
+export default function Login({ setToken }) {   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
