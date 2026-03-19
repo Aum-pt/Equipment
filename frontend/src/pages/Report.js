@@ -232,6 +232,7 @@ if (reports.length > 0) {
           <option value="ยืมอยู่">ยืมอยู่</option>
           <option value="คืนแล้ว">คืนแล้ว</option>
           <option value="กำลังซ่อม">กำลังซ่อม</option>
+          <option value="เสร็จสิ้น">เสร็จสิ้น</option>
         </select>
 
         {/* DATE */}
