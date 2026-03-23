@@ -12,19 +12,21 @@ import Report from './pages/Report';
 import History from './pages/History';
 import Navbar from './components/Navbar';
 
-function PrivateRoute({ children }) {
-  const token = localStorage.getItem('token');
+// ✅ ใช้ token จาก props (ไม่ใช้ localStorage ตรง ๆ)
+function PrivateRoute({ children, token }) {
   return token ? children : <Navigate to="/login" />;
 }
 
 function App() {
   const [token, setToken] = useState(null);  
 
+  // โหลด token ตอนเปิดเว็บ
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
     if (storedToken) setToken(storedToken);
   }, []);
 
+  // เช็ค token หมดอายุทุก 5 วิ
   useEffect(() => {
     const interval = setInterval(() => {
       const t = localStorage.getItem('token');
@@ -32,15 +34,14 @@ function App() {
 
       try {
         const decoded = jwtDecode(t);
+
         if (decoded.exp < Date.now() / 1000) {
           localStorage.removeItem('token');
           setToken(null);
-          window.location.href = '/login';
         }
       } catch {
         localStorage.removeItem('token');
         setToken(null);
-        window.location.href = '/login';
       }
     }, 5000);
 
@@ -49,16 +50,80 @@ function App() {
 
   return (
     <Router>
-      {token && <Navbar />}   
+      {token && <Navbar />}
+
       <Routes>
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path="/equipment" element={<PrivateRoute><Equipment /></PrivateRoute>} />
-        <Route path="/borrow" element={<PrivateRoute><Borrow /></PrivateRoute>} />
-        <Route path="/return" element={<PrivateRoute><Return /></PrivateRoute>} />
-        <Route path="/repair" element={<PrivateRoute><Repair /></PrivateRoute>} />
-        <Route path="/history" element={<PrivateRoute><History /></PrivateRoute>} />
-        <Route path="/report" element={<PrivateRoute><Report /></PrivateRoute>} />
+
+        {/* ✅ กันเข้าหน้า login ถ้า login แล้ว */}
+        <Route 
+          path="/login" 
+          element={!token ? <Login setToken={setToken} /> : <Navigate to="/" />} 
+        />
+
+        {/* ✅ ใช้ token จาก state */}
+        <Route 
+          path="/" 
+          element={
+            <PrivateRoute token={token}>
+              <Dashboard />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/equipment" 
+          element={
+            <PrivateRoute token={token}>
+              <Equipment />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/borrow" 
+          element={
+            <PrivateRoute token={token}>
+              <Borrow />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/return" 
+          element={
+            <PrivateRoute token={token}>
+              <Return />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/repair" 
+          element={
+            <PrivateRoute token={token}>
+              <Repair />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/history" 
+          element={
+            <PrivateRoute token={token}>
+              <History />
+            </PrivateRoute>
+          } 
+        />
+
+        <Route 
+          path="/report" 
+          element={
+            <PrivateRoute token={token}>
+              <Report />
+            </PrivateRoute>
+          } 
+        />
+
       </Routes>
     </Router>
   );

@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-const FIXED_USER = 'nt123';
-const FIXED_PASS = '73000';
+const FIXED_USER = 'totnpt';
+const FIXED_PASS = 'tot@npt73oo';
 if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET not configured');
 }

@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://localhost:3001/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -21,10 +21,18 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+
+    const status = error.response?.status;
+    const url = error.config?.url || '';
+
+    if (url.includes('/auth/login')) {
+      return Promise.reject(error);
     }
+
+    if (status === 401) {
+      localStorage.removeItem('token');
+    }
+
     return Promise.reject(error);
   }
 );
