@@ -34,6 +34,15 @@ app.use('/api/report', reportRoutes);
 app.use('/api/activity', activityRoutes);
 app.use('/api/auth', authRoutes);
 
+const path = require('path');
+// Serve frontend
+app.use(express.static(path.join(__dirname, 'public'))); // หรือโฟลเดอร์ frontend ของคุณ
+
+// ✅ แบบใหม่ สำหรับ Express 5
+app.get('/{*splat}', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
